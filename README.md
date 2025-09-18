@@ -13,10 +13,10 @@ Uma aplicação Django para contadores fazerem upload de arquivos CSV e interagi
 ## 📸 Screenshots
 
 ### Tela de Upload
-![Upload Screen](ContAI-Finance/screenshots/upload-screen.png)
+![Upload Screen](ContAI-Finance/static/upload.png)
 
 ### Tela de Chat
-![Chat Screen](ContAI-Finance/screenshots/chat-screen.png)
+![Chat Screen](ContAI-Finance/static/chat.png)
 
 ## 🚀 Instalação e Execução
 

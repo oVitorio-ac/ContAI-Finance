@@ -42,7 +42,6 @@
                         <div class="row g-2">
                             {% if arquivos %}
                                 {% for arquivo in arquivos %}
-                                    {% if not arquivo.error %}
                                     <div class="col-md-4">
                                         <div class="card file-card" onclick="selectFile('{{ arquivo.filename }}')"
                                              style="cursor: pointer; transition: all 0.3s;">
@@ -53,7 +52,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {% endif %}
                                 {% endfor %}
                             {% else %}
                                 <div class="col-12">
@@ -150,7 +148,7 @@ document.getElementById('chat-form').addEventListener('submit', function(e) {
     document.getElementById('pergunta').value = '';
     
     // Send to server
-    fetch('{% url "chat" %}', {
+    fetch(window.location.origin + '/proxy/8000/chat/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

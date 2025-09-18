@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "csv-analyzer": {
+      "command": "python",
+      "args": ["/home/participant/projects/ContAI-Finance/mcp_server/csv_analyzer.py"],
+      "env": {
+        "PYTHONPATH": "/home/participant/projects/ContAI-Finance"
+      }
+    },
+    "bedrock-data-automation": {
+      "command": "npx",
+      "args": ["aws-bedrock-data-automation-mcp-server"],
+      "env": {
+        "AWS_REGION": "us-east-1"
+      }
+    }
+  }
+}

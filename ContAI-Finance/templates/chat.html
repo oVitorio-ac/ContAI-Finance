@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block title %}Chat com IA - ContAI Finance{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="mb-0">💬 Chat com Assistente de IA</h2>
+                <span class="badge bg-success" id="status">Online</span>
+            </div>
+            
+            <!-- Chat Messages -->
+            <div id="chat-messages" class="border rounded p-3 mb-3" style="height: 60vh; overflow-y: auto; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white;">
+                <div class="text-center text-muted py-4">
+                    <i class="fas fa-robot fa-3x mb-3"></i>
+                    <p>Olá! Sou seu assistente de análise financeira. Selecione um arquivo CSV abaixo e faça suas perguntas!</p>
+                </div>
+            </div>
+            
+            <!-- Input Area -->
+            <div class="card">
+                <div class="card-body">
+                    <form id="chat-form">
+                        {% csrf_token %}
+                        <div class="row g-2">
+                            <div class="col-md-8">
+                                <input type="text" id="pergunta" name="pergunta" class="form-control form-control-lg" placeholder="Digite sua pergunta sobre os dados financeiros..." required>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary btn-lg w-100">
+                                    <i class="fas fa-paper-plane"></i> Enviar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <!-- File Selection -->
+                    <div class="mt-3">
+                        <label class="form-label fw-bold">📁 Selecione o arquivo para análise:</label>
+                        <div class="row g-2">
+                            {% if arquivos %}
+                                {% for arquivo in arquivos %}
+                                    {% if not arquivo.error %}
+                                    <div class="col-md-4">
+                                        <div class="card file-card" onclick="selectFile('{{ arquivo.filename }}')"
+                                             style="cursor: pointer; transition: all 0.3s;">
+                                            <div class="card-body text-center p-2">
+                                                <i class="fas fa-file-csv fa-2x text-success mb-2"></i>
+                                                <h6 class="card-title mb-1">{{ arquivo.filename }}</h6>
+                                                <small class="text-muted">{{ arquivo.rows }} linhas</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <div class="col-12">
+                                    <div class="alert alert-info text-center">
+                                        <i class="fas fa-upload fa-2x mb-2"></i>
+                                        <p class="mb-0">Nenhum arquivo encontrado. <a href="{% url 'upload' %}">Faça upload de um CSV</a></p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <input type="hidden" id="arquivo" name="arquivo" value="">
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="mt-3">
+                        <label class="form-label fw-bold">⚡ Ações rápidas:</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="button" class="btn btn-outline-info btn-sm" onclick="setQuestion('análise')">
+                                📊 Análise Completa
+                            </button>
+                            <button type="button" class="btn btn-outline-success btn-sm" onclick="setQuestion('insights')">
+                                💡 Insights IA
+                            </button>
+                            <button type="button" class="btn btn-outline-warning btn-sm" onclick="setQuestion('total')">
+                                📈 Totais
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setQuestion('média')">
+                                📊 Médias
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+.file-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.file-card.selected {
+    border: 2px solid #0d6efd;
+    background-color: #e7f3ff;
+}
+.message-user {
+    background: #0d6efd;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 18px 18px 5px 18px;
+    margin: 10px 0;
+    margin-left: 20%;
+    word-wrap: break-word;
+}
+.message-ai {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 18px 18px 18px 5px;
+    margin: 10px 0;
+    margin-right: 20%;
+    word-wrap: break-word;
+}
+</style>
+<script>
+let selectedFile = '';
+
+document.getElementById('chat-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const pergunta = document.getElementById('pergunta').value;
+    const chatMessages = document.getElementById('chat-messages');
+
+    if (!selectedFile) {
+        alert('Por favor, selecione um arquivo CSV primeiro!');
+        return;
+    }
+
+    // Clear welcome message
+    if (chatMessages.innerHTML.includes('Olá! Sou seu assistente')) {
+        chatMessages.innerHTML = '';
+    }
+
+    // Add user message
+    chatMessages.innerHTML += `<div class="message-user"><strong>Você:</strong> ${pergunta}</div>`;
+    
+    // Add loading indicator
+    chatMessages.innerHTML += `<div class="message-ai" id="loading"><i class="fas fa-spinner fa-spin"></i> Analisando dados de <strong>${selectedFile}</strong>...</div>`;
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Clear input
+    document.getElementById('pergunta').value = '';
+    
+    // Send to server
+    fetch('{% url "chat" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: 'pergunta=' + encodeURIComponent(pergunta) + '&arquivo=' + encodeURIComponent(selectedFile)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Remove loading indicator
+        const loadingElement = document.getElementById('loading');
+        if (loadingElement) {
+            loadingElement.remove();
+        }
+        
+        if (data.resposta) {
+            const formattedResponse = data.resposta.replace(/\n/g, '<br>');
+            chatMessages.innerHTML += `<div class="message-ai"><strong>🤖 IA:</strong><br>${formattedResponse}</div>`;
+        } else {
+            chatMessages.innerHTML += `<div class="message-ai"><strong>❌ Erro:</strong> Resposta vazia do servidor</div>`;
+        }
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    })
+    .catch(error => {
+        const loadingElement = document.getElementById('loading');
+        if (loadingElement) {
+            loadingElement.remove();
+        }
+        
+        console.error('Erro:', error);
+        chatMessages.innerHTML += `<div class="message-ai"><strong>❌ Erro:</strong> ${error.message}</div>`;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    });
+});
+
+function selectFile(filename) {
+    selectedFile = filename;
+    document.getElementById('arquivo').value = filename;
+    
+    // Update visual selection
+    document.querySelectorAll('.file-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    event.target.closest('.file-card').classList.add('selected');
+    
+    // Update status
+    document.getElementById('status').textContent = `Arquivo: ${filename}`;
+    document.getElementById('status').className = 'badge bg-info';
+}
+
+function setQuestion(question) {
+    document.getElementById('pergunta').value = question;
+    document.getElementById('pergunta').focus();
+}
+</script>
+{% endblock %}

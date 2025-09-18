@@ -1,0 +1,7 @@
+Django==5.2.6
+boto3==1.40.34
+pandas==2.2.0
+numpy==1.26.0
+pytest==7.4.3
+pytest-django==4.7.0
+coverage==7.3.2

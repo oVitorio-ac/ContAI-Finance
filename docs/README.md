@@ -93,6 +93,5 @@ Para contribuir com a documentação:
 
 ---
 
-**Última atualização**: Janeiro 2024  
 **Versão da documentação**: 2.0  
 **Projeto**: ContAI Finance - TDC 2025 Q Developer Quest

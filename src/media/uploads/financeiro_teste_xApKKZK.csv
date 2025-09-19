@@ -1,0 +1,5 @@
+data,descricao,valor,categoria
+2024-01-01,Receita Vendas,1500.00,Receita
+2024-01-02,Despesa Aluguel,-800.00,Despesa
+2024-01-03,Receita Servicos,2200.00,Receita
+2024-01-04,Despesa Energia,-150.00,Despesa

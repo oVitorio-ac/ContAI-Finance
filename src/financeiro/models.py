@@ -16,5 +16,6 @@ class UploadArquivo(models.Model):
         return self.titulo
 
     class Meta:
+        app_label = "financeiro"
         verbose_name = "Upload de Arquivo"
         verbose_name_plural = "Uploads de Arquivos"

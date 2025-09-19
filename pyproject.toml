@@ -106,10 +106,11 @@ exclude_lines = [
 ]
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "src.contai_finance.settings"
+DJANGO_SETTINGS_MODULE = "contai_finance.settings"
 python_files = ["tests.py", "test_*.py", "*_tests.py"]
-addopts = "-v --tb=short --strict-markers --cov=src --cov-report=html --cov-report=term"
+addopts = "-v --tb=short --strict-markers"
 testpaths = ["tests"]
+django_find_project = true
 markers = [
     "unit: Unit tests",
     "integration: Integration tests",

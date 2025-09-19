@@ -5,7 +5,7 @@ Este é um wrapper que aponta para src/manage.py
 """
 import os
 import sys
+import subprocess
 
 # Executar o manage.py real em src/
-os.chdir('src')
-exec(open('manage.py').read())
+subprocess.call([sys.executable, 'src/manage.py'] + sys.argv[1:])

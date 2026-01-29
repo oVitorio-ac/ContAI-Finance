@@ -5,23 +5,23 @@ from io import StringIO
 
 def lambda_handler(event, context):
     """
-    Lambda function para processar arquivos CSV no S3
+    Lambda function to process CSV files in S3
     """
     s3_client = boto3.client('s3')
     
     try:
-        # Extrai informações do evento S3
+        # Extract information from S3 event
         bucket = event['Records'][0]['s3']['bucket']['name']
         key = event['Records'][0]['s3']['object']['key']
         
-        # Baixa o arquivo CSV do S3
+        # Download CSV file from S3
         response = s3_client.get_object(Bucket=bucket, Key=key)
         csv_content = response['Body'].read().decode('utf-8')
         
-        # Processa o CSV com pandas
+        # Process CSV with pandas
         df = pd.read_csv(StringIO(csv_content))
         
-        # Análise básica
+        # Basic analysis
         analysis = {
             'filename': key,
             'rows': len(df),
@@ -32,12 +32,12 @@ def lambda_handler(event, context):
             'numeric_summary': {}
         }
         
-        # Estatísticas para colunas numéricas
+        # Statistics for numeric columns
         numeric_cols = df.select_dtypes(include=['number']).columns
         if len(numeric_cols) > 0:
             analysis['numeric_summary'] = df[numeric_cols].describe().to_dict()
         
-        # Salva análise de volta no S3
+        # Save analysis back to S3
         analysis_key = key.replace('.csv', '_analysis.json')
         s3_client.put_object(
             Bucket=bucket,

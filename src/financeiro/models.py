@@ -6,10 +6,10 @@ class UploadArquivo(models.Model):
     Model for uploaded files.
     """
 
-    titulo = models.CharField(max_length=255, help_text="Nome do arquivo enviado")
-    arquivo = models.FileField(upload_to="uploads/", help_text="O arquivo CSV em si")
+    titulo = models.CharField(max_length=255, help_text="Name of the uploaded file")
+    arquivo = models.FileField(upload_to="uploads/", help_text="The CSV file itself")
     data_upload = models.DateTimeField(
-        auto_now_add=True, help_text="Data e hora do upload"
+        auto_now_add=True, help_text="Date and time of upload"
     )
 
     def __str__(self):
@@ -17,5 +17,5 @@ class UploadArquivo(models.Model):
 
     class Meta:
         app_label = "financeiro"
-        verbose_name = "Upload de Arquivo"
-        verbose_name_plural = "Uploads de Arquivos"
+        verbose_name = "File Upload"
+        verbose_name_plural = "File Uploads"

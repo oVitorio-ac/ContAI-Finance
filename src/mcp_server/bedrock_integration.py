@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Integração com AWS Bedrock Data Automation MCP Server
-Permite usar o Bedrock para análise avançada de dados financeiros
+Integration with AWS Bedrock Data Automation MCP Server
+Allows using Bedrock for advanced financial data analysis.
 """
 import json
 import os
@@ -14,7 +14,7 @@ import pandas as pd
 
 
 class BedrockDataAutomation:
-    """Wrapper para AWS Bedrock Data Automation MCP Server"""
+    """Wrapper for AWS Bedrock Data Automation MCP Server"""
 
     def __init__(self, region="us-east-1"):
         self.region = region
@@ -22,13 +22,13 @@ class BedrockDataAutomation:
 
     def analyze_financial_data(self, csv_path: str, query: str) -> Dict[str, Any]:
         """
-        Usa Bedrock para análise avançada de dados financeiros
+        Uses Bedrock for advanced financial data analysis
         """
         try:
-            # Lê o CSV
+            # Read CSV
             df = pd.read_csv(csv_path)
 
-            # Prepara contexto para o Bedrock
+            # Prepare context for Bedrock
             data_summary = {
                 "rows": len(df),
                 "columns": list(df.columns),
@@ -39,38 +39,38 @@ class BedrockDataAutomation:
                 else {},
             }
 
-            # Prompt para análise financeira
+            # Prompt for financial analysis
             prompt = f"""
-            Você é um assistente especializado em análise de dados financeiros.
+            You are an assistant specialized in financial data analysis.
             
-            Dados do CSV:
-            - Arquivo: {os.path.basename(csv_path)}
-            - Linhas: {data_summary['rows']}
-            - Colunas: {', '.join(data_summary['columns'])}
+            CSV Data:
+            - File: {os.path.basename(csv_path)}
+            - Rows: {data_summary['rows']}
+            - Columns: {', '.join(data_summary['columns'])}
             
-            Amostra dos dados:
+            Data Sample:
             {json.dumps(data_summary['sample_data'], indent=2, default=str)}
             
-            Pergunta do usuário: {query}
+            User Question: {query}
             
-            Por favor, forneça uma análise detalhada e responda à pergunta do usuário.
-            Foque em insights financeiros relevantes, tendências, e recomendações práticas.
+            Please provide a detailed analysis and answer the user's question.
+            Focus on relevant financial insights, trends, and practical recommendations.
             """
 
-            # Chama o Bedrock
+            # Call Bedrock
             response = self._call_bedrock(prompt)
 
             return {"analysis": response, "data_summary": data_summary, "query": query}
 
         except Exception as e:
-            return {"error": f"Erro na análise Bedrock: {str(e)}"}
+            return {"error": f"Error in Bedrock analysis: {str(e)}"}
 
     def _call_bedrock(self, prompt: str) -> str:
         """
-        Chama o modelo Bedrock para análise
+        Calls the Bedrock model for analysis
         """
         try:
-            # Usa Claude 3 Haiku para análise rápida
+            # Use Claude 3 Haiku for fast analysis
             body = json.dumps(
                 {
                     "anthropic_version": "bedrock-2023-05-31",
@@ -89,36 +89,36 @@ class BedrockDataAutomation:
             return response_body["content"][0]["text"]
 
         except Exception as e:
-            # Fallback para análise local se Bedrock não estiver disponível
+            # Fallback to local analysis if Bedrock is not available
             return self._local_analysis_fallback(prompt)
 
     def _local_analysis_fallback(self, prompt: str) -> str:
         """
-        Análise local como fallback se Bedrock não estiver disponível
+        Local analysis as fallback if Bedrock is not available
         """
         return """
-        📊 Análise Financeira (Modo Local)
+        📊 Financial Analysis (Local Mode)
         
-        Baseado nos dados fornecidos, aqui estão alguns insights:
+        Based on the provided data, here are some insights:
         
-        • Os dados foram carregados com sucesso
-        • Recomendo verificar as colunas numéricas para análises de tendências
-        • Para análises mais avançadas, configure as credenciais AWS Bedrock
+        • Data has been successfully loaded
+        • I recommend checking the numeric columns for trend analysis
+        • For more advanced analysis, configure AWS Bedrock credentials
         
-        💡 Dica: Use perguntas específicas como:
-        - "Qual o total de receitas?"
-        - "Mostre as maiores despesas"
-        - "Analise a tendência mensal"
+        💡 Tip: Use specific questions like:
+        - "What is the total revenue?"
+        - "Show the largest expenses"
+        - "Analyze the monthly trend"
         """
 
     def generate_financial_insights(self, csv_path: str) -> Dict[str, Any]:
         """
-        Gera insights financeiros automáticos usando Bedrock
+        Generates automatic financial insights using Bedrock
         """
         try:
             df = pd.read_csv(csv_path)
 
-            # Detecta colunas financeiras
+            # Detect financial columns
             value_columns = []
             date_columns = []
 
@@ -145,21 +145,21 @@ class BedrockDataAutomation:
                     date_columns.append(col)
 
             insights_prompt = f"""
-            Analise este conjunto de dados financeiros e forneça insights automáticos:
+            Analyze this financial dataset and provide automatic insights:
             
-            Estrutura dos dados:
-            - Total de registros: {len(df)}
-            - Colunas de valores: {value_columns}
-            - Colunas de data: {date_columns}
+            Data structure:
+            - Total records: {len(df)}
+            - Value columns: {value_columns}
+            - Date columns: {date_columns}
             
-            Estatísticas básicas:
-            {df[value_columns].describe().to_string() if value_columns else "Nenhuma coluna numérica detectada"}
+            Basic statistics:
+            {df[value_columns].describe().to_string() if value_columns else "No numeric columns detected"}
             
-            Forneça:
-            1. Resumo executivo dos dados
-            2. Principais tendências identificadas
-            3. Alertas ou pontos de atenção
-            4. Recomendações de ação
+            Provide:
+            1. Executive summary of the data
+            2. Key identified trends
+            3. Warnings or points of attention
+            4. Recommended actions
             """
 
             analysis = self._call_bedrock(insights_prompt)
@@ -173,34 +173,34 @@ class BedrockDataAutomation:
             }
 
         except Exception as e:
-            return {"error": f"Erro ao gerar insights: {str(e)}"}
+            return {"error": f"Error generating insights: {str(e)}"}
 
     def compare_periods(
         self, csv_path: str, date_column: str, value_column: str
     ) -> Dict[str, Any]:
         """
-        Compara períodos usando análise Bedrock
+        Compares periods using Bedrock analysis
         """
         try:
             df = pd.read_csv(csv_path)
             df[date_column] = pd.to_datetime(df[date_column])
 
-            # Agrupa por mês
+            # Group by month
             monthly_data = df.groupby(df[date_column].dt.to_period("M"))[
                 value_column
             ].sum()
 
             comparison_prompt = f"""
-            Analise esta comparação de períodos financeiros:
+            Analyze this comparison of financial periods:
             
-            Dados mensais:
+            Monthly data:
             {monthly_data.to_string()}
             
-            Forneça:
-            1. Análise de crescimento/declínio
-            2. Identificação de sazonalidade
-            3. Períodos de melhor e pior performance
-            4. Projeções e recomendações
+            Provide:
+            1. Growth/decline analysis
+            2. Seasonality identification
+            3. Best and worst performing periods
+            4. Projections and recommendations
             """
 
             analysis = self._call_bedrock(comparison_prompt)
@@ -219,11 +219,11 @@ class BedrockDataAutomation:
             }
 
         except Exception as e:
-            return {"error": f"Erro na comparação de períodos: {str(e)}"}
+            return {"error": f"Error in period comparison: {str(e)}"}
 
 
 def handle_bedrock_request(request: Dict[str, Any]) -> Dict[str, Any]:
-    """Handler para requisições Bedrock MCP"""
+    """Handler for Bedrock MCP requests"""
     bedrock = BedrockDataAutomation()
 
     method = request.get("method", "")
@@ -248,14 +248,14 @@ def handle_bedrock_request(request: Dict[str, Any]) -> Dict[str, Any]:
             }
 
         else:
-            return {"error": f"Método não suportado: {method}"}
+            return {"error": f"Unsupported method: {method}"}
 
     except Exception as e:
-        return {"error": f"Erro no Bedrock MCP: {str(e)}"}
+        return {"error": f"Error in Bedrock MCP: {str(e)}"}
 
 
 if __name__ == "__main__":
-    # Servidor MCP via stdin/stdout
+    # MCP server via stdin/stdout
     while True:
         try:
             line = input()
@@ -269,5 +269,5 @@ if __name__ == "__main__":
         except EOFError:
             break
         except Exception as e:
-            error_response = {"error": f"Erro no servidor Bedrock: {str(e)}"}
+            error_response = {"error": f"Bedrock server error: {str(e)}"}
             print(json.dumps(error_response))

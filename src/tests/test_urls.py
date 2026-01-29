@@ -5,14 +5,14 @@ from django.urls import resolve, reverse
 
 @pytest.mark.integration
 class TestURLs(TestCase):
-    """Testes de integração para as URLs"""
+    """Integration tests for URLs"""
 
     def setUp(self):
-        """Setup para os testes"""
+        """Setup for tests"""
         self.client = Client()
 
     def test_upload_url_resolve(self):
-        """Testa resolução da URL de upload"""
+        """Tests resolution of the upload URL"""
         url = reverse('upload')
         self.assertEqual(url, '/upload/')
 
@@ -20,7 +20,7 @@ class TestURLs(TestCase):
         self.assertEqual(resolver.view_name, 'upload')
 
     def test_chat_url_resolve(self):
-        """Testa resolução da URL de chat"""
+        """Tests resolution of the chat URL"""
         url = reverse('chat')
         self.assertEqual(url, '/chat/')
 
@@ -28,7 +28,7 @@ class TestURLs(TestCase):
         self.assertEqual(resolver.view_name, 'chat')
 
     def test_test_url_resolve(self):
-        """Testa resolução da URL de teste"""
+        """Tests resolution of the test URL"""
         url = reverse('test')
         self.assertEqual(url, '/test/')
 
@@ -36,7 +36,7 @@ class TestURLs(TestCase):
         self.assertEqual(resolver.view_name, 'test')
 
     def test_urls_acessiveis(self):
-        """Testa acessibilidade das URLs"""
+        """Tests accessibility of URLs"""
         urls = [
             ('upload', 200),
             ('chat', 200),

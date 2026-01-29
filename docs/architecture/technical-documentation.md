@@ -27,7 +27,7 @@ User → Frontend → Django Views → MCP Servers → AWS Bedrock
 ## 🔧 Technologies Used
 
 | Category | Technology | Version | Purpose |
-|-----------|------------|--------|-----------|
+| :--- | :--- | :--- | :--- |
 | **Backend** | Django | 5.2.6 | Web Framework |
 | **Frontend** | Bootstrap | 5.x | Responsive UI |
 | **Database** | SQLite | 3.x | Database |
@@ -91,6 +91,7 @@ ContAI-Finance/
 ## 🗄️ Data Models
 
 ### UploadArquivo (Uploaded File)
+
 ```python
 class UploadArquivo(models.Model):
     titulo = models.CharField(max_length=255)
@@ -99,6 +100,7 @@ class UploadArquivo(models.Model):
 ```
 
 **Fields:**
+
 - `titulo`: Descriptive name of the file.
 - `arquivo`: The uploaded CSV file.
 - `data_upload`: Timestamp of the upload.
@@ -108,7 +110,7 @@ class UploadArquivo(models.Model):
 ### Main URLs
 
 | URL | Method | View | Description |
-|-----|--------|------|-----------|
+| :--- | :--- | :--- | :--- |
 | `/` | GET/POST | `upload_view` | File Upload |
 | `/chat/` | GET/POST | `chat_view` | Chat Interface |
 | `/test/` | GET/POST | `test_view` | Test Endpoint |
@@ -117,35 +119,44 @@ class UploadArquivo(models.Model):
 
 ```json
 {
-  "resposta": "Analysis of financial.csv:\n📊 Total: R$ 1,500.00"
+  "response": "Analysis of financial.csv:\n📊 Total: $ 1,500.00"
 }
 ```
 
 ## 🔍 MCP Servers
 
+The project uses the **Model Context Protocol (MCP)** to provide the AI with specialized tools for data analysis.
+
 ### CSV Analyzer
-- **File**: `mcp_server/csv_analyzer.py`
-- **Function**: Local analysis of CSV files.
-- **Methods**:
-  - `analyze_csv()`: Comprehensive analysis.
-  - `query_data()`: Specific queries.
-  - `list_csv_files()`: Lists available files.
+
+- **File**: `src/mcp_server/csv_analyzer.py`
+- **Function**: Performs local analysis of CSV files using `pandas`.
+- **Capabilities**:
+  - **File Listing**: Scan the `media/uploads` directory for available CSVs.
+  - **Structural Analysis**: Detect columns, data types, and missing values.
+  - **Financial Heuristics**: Automatically identify "value" and "date" columns based on common patterns (e.g., "valor", "amount", "date").
+  - **Query Engine**: Execute pre-defined mathematical operations like `total`, `average`, `max`, and `min` on the data.
 
 ### Bedrock Integration
-- **File**: `mcp_server/bedrock_integration.py`
-- **Function**: Integration with AWS Bedrock for AI insights.
-- **Methods**:
-  - `generate_financial_insights()`: Automatic insights.
-  - `analyze_financial_data()`: Advanced analysis.
+
+- **File**: `src/mcp_server/bedrock_integration.py`
+- **Function**: Interfaces with **Anthropic Claude 3 Haiku** via AWS Bedrock.
+- **Capabilities**:
+  - **Intelligent Insight Generation**: Summarize financial trends and provide qualitative analysis.
+  - **Advanced Query Support**: Handle natural language questions that require cross-referencing or complex reasoning.
+  - **Period Comparison**: Automatically group data by time periods and calculate growth/decline rates.
+  - **Graceful Fallback**: Includes a local analysis mode for when AWS credentials are not configured.
 
 ## 🧪 Automated Testing
 
 ### Test Structure
+
 - **19 tests** implemented.
 - **Coverage**: ~90% of code.
 - **Types**: Unit, Integration, E2E.
 
 ### Running Tests
+
 ```bash
 # Run all tests
 python run_tests.py
@@ -159,26 +170,42 @@ pytest -m e2e           # End-to-End tests
 ## 🚀 Deployment and Infrastructure
 
 ### Local Development
-```bash
-# 1. Clone repository
-git clone https://github.com/oVitorio-ac/ContAI-Finance.git
-cd ContAI-Finance
 
-# 2. Setup environment using Poetry
-poetry install
-
-# 3. Configure environment variables (optional)
-cp .env.example .env
-# Edit .env with your settings
-
-# 4. Run migrations
-poetry run python manage.py migrate
-
-# 5. Start server
-poetry run python manage.py runserver
-```
+1. **Clone repository**
+   ```bash
+   git clone https://github.com/oVitorio-ac/ContAI-Finance.git
+   cd ContAI-Finance
+   ```
+2. **Setup environment using Poetry**
+   ```bash
+   poetry install
+   ```
+3. **Configure environment variables (optional)**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your settings
+   ```
+4. **Run migrations**
+   ```bash
+   poetry run python manage.py migrate
+   ```
+5. **Start server**
+   ```bash
+   poetry run python manage.py runserver
+   ```
 
 ### Development Configuration
+
+The project follows high standards for code quality and maintainability:
+
+1. **Dependency Management**: Powered by **Poetry**, ensuring reproducible builds and isolated environments.
+2. **Linting & Formatting**:
+   - **Ruff**: used as a hyper-fast linter and formatter.
+   - **Black**: provides consistent, unopinionated code styling.
+   - **isort**: handles import sorting automatically.
+3. **Pre-commit Hooks**: Enforce quality checks before every commit to prevent regression.
+4. **Environment Isolation**: Uses `.env` files for sensitive configuration, following the "Twelve-Factor App" methodology.
+
 ```bash
 # Install pre-commit hooks
 poetry run pre-commit install
@@ -194,6 +221,7 @@ poetry run pytest --cov=src --cov-report=html
 ```
 
 ### AWS Deployment (Planned)
+
 - **ECS Fargate**: Application containers.
 - **S3**: File storage.
 - **Lambda**: Serverless processing.
@@ -203,12 +231,14 @@ poetry run pytest --cov=src --cov-report=html
 ## 🔒 Security
 
 ### Security Features
+
 - CSRF protection enabled.
 - File upload validation.
 - SQL injection protection (Django ORM).
 - XSS protection (Django templates).
 
 ### Environment Variables
+
 ```bash
 # AWS (Production)
 AWS_ACCESS_KEY_ID=<key>
@@ -225,6 +255,7 @@ ALLOWED_HOSTS=<hosts>
 ## 📊 Monitoring and Logs
 
 ### Logging
+
 ```python
 # Configuration in settings.py
 LOGGING = {
@@ -248,6 +279,7 @@ LOGGING = {
 ## 🔧 Development Settings
 
 ### Main settings.py
+
 ```python
 # Database
 DATABASES = {
@@ -290,12 +322,14 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 ## 📈 Performance
 
 ### Implemented Optimizations
+
 - Lazy loading for MCP servers.
 - CSV analysis caching.
 - Response compression.
 - Django query optimization.
 
 ### Performance Metrics
+
 - Upload time: < 2s
 - CSV analysis: < 5s
 - Chat response: < 3s
@@ -303,6 +337,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 ## 🔄 CI/CD (Planned)
 
 ### GitHub Actions Pipeline
+
 ```yaml
 # .github/workflows/ci.yml
 name: CI/CD

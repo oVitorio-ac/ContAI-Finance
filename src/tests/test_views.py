@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import patch
 from django.core.files.base import ContentFile
 from django.test import Client, TestCase
 from django.urls import reverse
@@ -8,46 +9,44 @@ from financeiro.models import UploadArquivo
 
 @pytest.mark.integration
 class TestViews(TestCase):
-    """Testes de integração para as views"""
+    """Integration tests for views"""
 
     def setUp(self):
-        """Setup para os testes"""
+        """Setup for tests"""
         self.client = Client()
         self.arquivo_content = b"col1,col2\n1,2\n3,4"
-        self.arquivo = ContentFile(self.arquivo_content, name="teste.csv")
+        self.arquivo = ContentFile(self.arquivo_content, name="test.csv")
 
     def test_upload_view_get(self):
-        """Testa GET na view de upload"""
+        """Tests GET on upload view"""
         response = self.client.get(reverse('upload'))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'upload.html')
         self.assertIn('form', response.context)
 
-    def test_upload_view_post_valido(self):
-        """Testa POST válido no upload"""
-        form_data = {'titulo': 'Arquivo Teste'}
+    def test_upload_view_post_valid(self):
+        """Tests valid POST on upload"""
+        form_data = {'titulo': 'Test File'}
         form_files = {'arquivo': self.arquivo}
 
         response = self.client.post(reverse('upload'), data=form_data, files=form_files)
 
-        # Verificar se foi salvo no banco
+        # Check if saved in DB
         upload = UploadArquivo.objects.first()
         if upload:
-            # Deve redirecionar para chat se salvo
+            # Should redirect to chat if saved
             self.assertEqual(response.status_code, 302)
             self.assertEqual(response.url, reverse('chat'))
-            self.assertEqual(upload.titulo, 'Arquivo Teste')
+            self.assertEqual(upload.titulo, 'Test File')
         else:
-            # Verificar se a página foi renderizada corretamente
+            # Check if page rendered correctly
             self.assertEqual(response.status_code, 200)
             self.assertTemplateUsed(response, 'upload.html')
-            # O form pode não estar salvando por questões de configuração de teste
-            # Isso é aceitável para testes de view
 
-    def test_upload_view_post_invalido(self):
-        """Testa POST inválido no upload"""
-        # Sem título
+    def test_upload_view_post_invalid(self):
+        """Tests invalid POST on upload"""
+        # Missing title
         form_data = {}
         form_files = {'arquivo': self.arquivo}
 
@@ -59,41 +58,44 @@ class TestViews(TestCase):
         self.assertFalse(response.context['form'].is_valid())
 
     def test_chat_view_get(self):
-        """Testa GET na view de chat"""
-        response = self.client.get(reverse('chat'))
+        """Tests GET on chat view"""
+        with patch("financeiro.views.CSVAnalyzer") as mock_analyzer:
+            instance = mock_analyzer.return_value
+            instance.list_csv_files.return_value = [{"filename": "test.csv", "rows": 10}]
+            
+            response = self.client.get(reverse('chat'))
 
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'chat.html')
-        # Deve ter arquivos na context, mesmo que vazio
-        self.assertIn('arquivos', response.context)
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed(response, 'chat.html')
+            self.assertIn('arquivos', response.context)
 
-    def test_chat_view_post_sem_arquivo(self):
-        """Testa POST no chat sem arquivo selecionado"""
-        data = {'pergunta': 'Qual o total?'}
+    def test_chat_view_post_no_file(self):
+        """Tests POST on chat without file selected"""
+        data = {'question': 'What is the total?'}
 
-        response = self.client.post(reverse('chat'), data=data, content_type='application/json')
+        response = self.client.post(reverse('chat'), data=data)
 
         self.assertEqual(response.status_code, 200)
         json_response = response.json()
-        self.assertIn('resposta', json_response)
-        self.assertIn('Por favor, selecione um arquivo', json_response['resposta'])
+        self.assertIn('response', json_response)
+        self.assertIn('Please select a CSV file first', json_response['response'])
 
     def test_test_view_get(self):
-        """Testa GET na view de teste"""
+        """Tests GET on test view"""
         response = self.client.get(reverse('test'))
 
         self.assertEqual(response.status_code, 200)
         json_response = response.json()
-        self.assertEqual(json_response['status'], 'GET funcionando')
+        self.assertEqual(json_response['status'], 'GET working')
         self.assertEqual(json_response['method'], 'GET')
 
     def test_test_view_post(self):
-        """Testa POST na view de teste"""
-        data = {'teste': 'valor'}
+        """Tests POST on test view"""
+        data = {'test': 'value'}
 
         response = self.client.post(reverse('test'), data=data)
 
         self.assertEqual(response.status_code, 200)
         json_response = response.json()
-        self.assertEqual(json_response['status'], 'POST funcionando')
-        self.assertIn('teste', json_response['data'])
+        self.assertEqual(json_response['status'], 'POST working')
+        self.assertIn('test', json_response['data'])

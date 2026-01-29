@@ -34,12 +34,12 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
 ]
 
-# Configuração para proxy
+# Proxy configuration
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# Configuração de Logging
+# Logging Configuration
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

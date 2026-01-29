@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
+#!/usr/bin/env python3
 """
-MCP Server para análise de arquivos CSV financeiros
-Permite ao Amazon Q Developer analisar dados financeiros dos CSVs enviados
+MCP Server for financial CSV file analysis.
+Allows Amazon Q Developer to analyze financial data from uploaded CSVs.
 """
 import json
 import os
@@ -12,18 +13,18 @@ from typing import Any, Dict, List
 import numpy as np
 import pandas as pd
 
-# Adiciona o diretório do projeto ao path
+# Add the project directory to the path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 class CSVAnalyzer:
-    """Analisador de arquivos CSV financeiros"""
+    """Analyzer for financial CSV files"""
 
     def __init__(self, media_path: str = "media/uploads"):
         self.media_path = Path(media_path)
 
     def list_csv_files(self) -> List[Dict[str, Any]]:
-        """Lista todos os arquivos CSV disponíveis"""
+        """Lists all available CSV files"""
         csv_files = []
         if self.media_path.exists():
             for file_path in self.media_path.glob("*.csv"):
@@ -49,16 +50,16 @@ class CSVAnalyzer:
         return csv_files
 
     def analyze_csv(self, filename: str) -> Dict[str, Any]:
-        """Analisa um arquivo CSV específico"""
+        """Analyzes a specific CSV file"""
         file_path = self.media_path / filename
 
         if not file_path.exists():
-            return {"error": f"Arquivo {filename} não encontrado"}
+            return {"error": f"File {filename} not found"}
 
         try:
             df = pd.read_csv(file_path)
 
-            # Análise básica
+            # Basic analysis
             analysis = {
                 "filename": filename,
                 "shape": {"rows": len(df), "columns": len(df.columns)},
@@ -68,25 +69,25 @@ class CSVAnalyzer:
                 "summary_stats": {},
             }
 
-            # Estatísticas para colunas numéricas
+            # Statistics for numeric columns
             numeric_cols = df.select_dtypes(include=[np.number]).columns
             if len(numeric_cols) > 0:
                 analysis["summary_stats"] = df[numeric_cols].describe().to_dict()
 
-            # Análise financeira específica
+            # Specific financial analysis
             financial_analysis = self._analyze_financial_data(df)
             analysis.update(financial_analysis)
 
             return analysis
 
         except Exception as e:
-            return {"error": f"Erro ao analisar {filename}: {str(e)}"}
+            return {"error": f"Error analyzing {filename}: {str(e)}"}
 
     def _analyze_financial_data(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Análise específica para dados financeiros"""
+        """Specific analysis for financial data"""
         financial_info = {}
 
-        # Detecta colunas de valor/dinheiro
+        # Detect value/money columns
         value_columns = []
         for col in df.columns:
             if any(
@@ -110,7 +111,7 @@ class CSVAnalyzer:
                     "zero_count": int((df[col] == 0).sum()),
                 }
 
-        # Detecta colunas de data
+        # Detect date columns
         date_columns = []
         for col in df.columns:
             if any(keyword in col.lower() for keyword in ["data", "date", "timestamp"]):
@@ -122,16 +123,16 @@ class CSVAnalyzer:
         return financial_info
 
     def query_data(self, filename: str, query: str) -> Dict[str, Any]:
-        """Executa consultas específicas nos dados"""
+        """Executes specific queries on the data"""
         file_path = self.media_path / filename
 
         if not file_path.exists():
-            return {"error": f"Arquivo {filename} não encontrado"}
+            return {"error": f"File {filename} not found"}
 
         try:
             df = pd.read_csv(file_path)
 
-            # Consultas pré-definidas
+            # Pre-defined queries
             query_lower = query.lower()
 
             if "total" in query_lower or "soma" in query_lower:
@@ -148,14 +149,14 @@ class CSVAnalyzer:
                 return self._filter_negative_values(df)
             else:
                 return {
-                    "message": "Consulta não reconhecida. Tente: total, média, maior, menor, positivos, negativos"
+                    "message": "Query not recognized. Try: total, average, max, min, positive, negative"
                 }
 
         except Exception as e:
-            return {"error": f"Erro na consulta: {str(e)}"}
+            return {"error": f"Query error: {str(e)}"}
 
     def _calculate_totals(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Calcula totais das colunas numéricas"""
+        """Calculates totals for numeric columns"""
         numeric_cols = df.select_dtypes(include=[np.number]).columns
         totals = {}
         for col in numeric_cols:
@@ -163,7 +164,7 @@ class CSVAnalyzer:
         return {"totals": totals}
 
     def _calculate_averages(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Calcula médias das colunas numéricas"""
+        """Calculates averages for numeric columns"""
         numeric_cols = df.select_dtypes(include=[np.number]).columns
         averages = {}
         for col in numeric_cols:
@@ -171,7 +172,7 @@ class CSVAnalyzer:
         return {"averages": averages}
 
     def _find_maximum_values(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Encontra valores máximos"""
+        """Finds maximum values"""
         numeric_cols = df.select_dtypes(include=[np.number]).columns
         maximums = {}
         for col in numeric_cols:
@@ -184,7 +185,7 @@ class CSVAnalyzer:
         return {"maximums": maximums}
 
     def _find_minimum_values(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Encontra valores mínimos"""
+        """Finds minimum values"""
         numeric_cols = df.select_dtypes(include=[np.number]).columns
         minimums = {}
         for col in numeric_cols:
@@ -197,7 +198,7 @@ class CSVAnalyzer:
         return {"minimums": minimums}
 
     def _filter_positive_values(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Filtra valores positivos"""
+        """Filters positive values"""
         numeric_cols = df.select_dtypes(include=[np.number]).columns
         positive_data = {}
         for col in numeric_cols:
@@ -212,7 +213,7 @@ class CSVAnalyzer:
         return {"positive_values": positive_data}
 
     def _filter_negative_values(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Filtra valores negativos"""
+        """Filters negative values"""
         numeric_cols = df.select_dtypes(include=[np.number]).columns
         negative_data = {}
         for col in numeric_cols:
@@ -228,7 +229,7 @@ class CSVAnalyzer:
 
 
 def handle_mcp_request(request: Dict[str, Any]) -> Dict[str, Any]:
-    """Handler principal para requisições MCP"""
+    """Main handler for MCP requests"""
     analyzer = CSVAnalyzer()
 
     method = request.get("method", "")
@@ -248,14 +249,14 @@ def handle_mcp_request(request: Dict[str, Any]) -> Dict[str, Any]:
             return {"result": analyzer.query_data(filename, query)}
 
         else:
-            return {"error": f"Método não suportado: {method}"}
+            return {"error": f"Unsupported method: {method}"}
 
     except Exception as e:
-        return {"error": f"Erro no servidor MCP: {str(e)}"}
+        return {"error": f"MCP server error: {str(e)}"}
 
 
 if __name__ == "__main__":
-    # Servidor MCP simples via stdin/stdout
+    # Simple MCP server via stdin/stdout
     while True:
         try:
             line = input()
@@ -269,5 +270,5 @@ if __name__ == "__main__":
         except EOFError:
             break
         except Exception as e:
-            error_response = {"error": f"Erro no servidor: {str(e)}"}
+            error_response = {"error": f"Server error: {str(e)}"}
             print(json.dumps(error_response))

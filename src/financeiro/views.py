@@ -14,10 +14,10 @@ from django.views.decorators.http import require_http_methods
 from .forms import UploadArquivoForm
 from .models import UploadArquivo
 
-# Configurar logger
+# Configure logger
 logger = logging.getLogger("financeiro")
 
-# Adiciona o servidor MCP ao path
+# Add MCP server to path
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), "mcp_server"))
 from bedrock_integration import BedrockDataAutomation
 from csv_analyzer import CSVAnalyzer
@@ -56,167 +56,168 @@ def chat_view(request):
     logger.info(f"Headers: {dict(request.headers)}")
 
     if request.method == "POST":
-        pergunta = request.POST.get("pergunta", "")
-        arquivo_selecionado = request.POST.get("arquivo", "")
-        logger.info(f"POST - Pergunta: '{pergunta}', Arquivo: '{arquivo_selecionado}'")
+        question = request.POST.get("question", "")
+        selected_file = request.POST.get("file", "")
+        logger.info(f"POST - Question: '{question}', File: '{selected_file}'")
 
         try:
-            logger.info("Inicializando CSVAnalyzer...")
+            logger.info("Initializing CSVAnalyzer...")
             analyzer = CSVAnalyzer()
-            logger.info("CSVAnalyzer inicializado")
+            logger.info("CSVAnalyzer initialized")
 
-            if not arquivo_selecionado:
-                resposta = "Por favor, selecione um arquivo CSV primeiro."
+            if not selected_file:
+                response_text = "Please select a CSV file first."
             else:
-                if "análise" in pergunta.lower():
-                    result = analyzer.analyze_csv(arquivo_selecionado)
-                    resposta = _format_analysis_response(result)
-                elif "total" in pergunta.lower():
-                    result = analyzer.query_data(arquivo_selecionado, "total")
-                    resposta = _format_query_response(result, pergunta)
-                elif "média" in pergunta.lower():
-                    result = analyzer.query_data(arquivo_selecionado, "média")
-                    resposta = _format_query_response(result, pergunta)
-                elif "insights" in pergunta.lower():
+                question_lower = question.lower()
+                if "analysis" in question_lower or "análise" in question_lower:
+                    result = analyzer.analyze_csv(selected_file)
+                    response_text = _format_analysis_response(result)
+                elif "total" in question_lower:
+                    result = analyzer.query_data(selected_file, "total")
+                    response_text = _format_query_response(result, question)
+                elif "average" in question_lower or "média" in question_lower:
+                    result = analyzer.query_data(selected_file, "average")
+                    response_text = _format_query_response(result, question)
+                elif "insights" in question_lower:
                     bedrock = BedrockDataAutomation()
-                    arquivo_path = os.path.join("media/uploads", arquivo_selecionado)
-                    result = bedrock.generate_financial_insights(arquivo_path)
-                    resposta = _format_insights_response(result)
+                    file_path = os.path.join("media/uploads", selected_file)
+                    result = bedrock.generate_financial_insights(file_path)
+                    response_text = _format_insights_response(result)
                 else:
-                    result = analyzer.query_data(arquivo_selecionado, pergunta)
-                    resposta = _format_query_response(result, pergunta)
+                    result = analyzer.query_data(selected_file, question)
+                    response_text = _format_query_response(result, question)
 
         except Exception as e:
-            logger.error(f"Erro no chat_view: {str(e)}", exc_info=True)
-            resposta = f"Erro ao processar: {str(e)}"
+            logger.error(f"Error in chat_view: {str(e)}", exc_info=True)
+            response_text = f"Error processing request: {str(e)}"
 
-        logger.info(f"Retornando resposta: {resposta[:50]}...")
-        return JsonResponse({"resposta": resposta})
+        logger.info(f"Returning response: {response_text[:50]}...")
+        return JsonResponse({"response": response_text})
 
-    # GET request - carrega arquivos disponíveis
-    logger.info("GET request - carregando arquivos")
+    # GET request - load available files
+    logger.info("GET request - loading files")
     try:
         analyzer = CSVAnalyzer()
-        arquivos = analyzer.list_csv_files()
-        logger.info(f"Arquivos carregados: {len(arquivos)}")
+        files = analyzer.list_csv_files()
+        logger.info(f"Files loaded: {len(files)}")
     except Exception as e:
-        logger.error(f"Erro ao carregar arquivos: {str(e)}", exc_info=True)
-        arquivos = []
+        logger.error(f"Error loading files: {str(e)}", exc_info=True)
+        files = []
 
-    return render(request, "chat.html", {"arquivos": arquivos})
+    return render(request, "chat.html", {"arquivos": files})
 
 
 def _format_analysis_response(result):
-    """Formata resposta de análise do CSV"""
+    """Formats CSV analysis response"""
     if "error" in result:
-        return f"Erro: {result['error']}"
+        return f"Error: {result['error']}"
 
-    response = f"📊 Análise do arquivo {result['filename']}:\n\n"
-    response += f"📈 Dimensões: {result['shape']['rows']} linhas, {result['shape']['columns']} colunas\n"
-    response += f"📋 Colunas: {', '.join(result['columns'])}\n\n"
+    response = f"📊 Analysis of file {result['filename']}:\n\n"
+    response += f"📈 Dimensions: {result['shape']['rows']} rows, {result['shape']['columns']} columns\n"
+    response += f"📋 Columns: {', '.join(result['columns'])}\n\n"
 
     if "value_columns" in result:
-        response += "💰 Análise Financeira:\n"
+        response += "💰 Financial Analysis:\n"
         for col in result["value_columns"]:
             analysis_key = f"{col}_analysis"
             if analysis_key in result:
                 data = result[analysis_key]
-                response += f"• {col}: Total R$ {data['total']:,.2f}, Média R$ {data['average']:,.2f}\n"
-                response += f"  Positivos: {data['positive_count']}, Negativos: {data['negative_count']}\n"
+                response += f"• {col}: Total $ {data['total']:,.2f}, Average $ {data['average']:,.2f}\n"
+                response += f"  Positives: {data['positive_count']}, Negatives: {data['negative_count']}\n"
 
     return response
 
 
-def _format_query_response(result, pergunta):
-    """Formata resposta de consulta específica"""
+def _format_query_response(result, question):
+    """Formats specific query response"""
     if "error" in result:
-        return f"Erro: {result['error']}"
+        return f"Error: {result['error']}"
 
     if "message" in result:
         return result["message"]
 
-    response = f"🔍 Resultado para '{pergunta}':\n\n"
+    response = f"🔍 Results for '{question}':\n\n"
 
     if "totals" in result:
-        response += "📊 Totais:\n"
+        response += "📊 Totals:\n"
         for col, value in result["totals"].items():
-            response += f"• {col}: R$ {value:,.2f}\n"
+            response += f"• {col}: $ {value:,.2f}\n"
 
     elif "averages" in result:
-        response += "📊 Médias:\n"
+        response += "📊 Averages:\n"
         for col, value in result["averages"].items():
-            response += f"• {col}: R$ {value:,.2f}\n"
+            response += f"• {col}: $ {value:,.2f}\n"
 
     elif "maximums" in result:
-        response += "📊 Valores Máximos:\n"
+        response += "📊 Maximum Values:\n"
         for col, data in result["maximums"].items():
-            response += f"• {col}: R$ {data['value']:,.2f} (linha {data['row']})\n"
+            response += f"• {col}: $ {data['value']:,.2f} (row {data['row']})\n"
 
     elif "minimums" in result:
-        response += "📊 Valores Mínimos:\n"
+        response += "📊 Minimum Values:\n"
         for col, data in result["minimums"].items():
-            response += f"• {col}: R$ {data['value']:,.2f} (linha {data['row']})\n"
+            response += f"• {col}: $ {data['value']:,.2f} (row {data['row']})\n"
 
     elif "positive_values" in result:
-        response += "📊 Valores Positivos:\n"
+        response += "📊 Positive Values:\n"
         for col, data in result["positive_values"].items():
             response += (
-                f"• {col}: {data['count']} registros, Total R$ {data['total']:,.2f}\n"
+                f"• {col}: {data['count']} records, Total $ {data['total']:,.2f}\n"
             )
 
     elif "negative_values" in result:
-        response += "📊 Valores Negativos:\n"
+        response += "📊 Negative Values:\n"
         for col, data in result["negative_values"].items():
             response += (
-                f"• {col}: {data['count']} registros, Total R$ {data['total']:,.2f}\n"
+                f"• {col}: {data['count']} records, Total $ {data['total']:,.2f}\n"
             )
 
     return response
 
 
 def _format_bedrock_response(result):
-    """Formata resposta do Bedrock"""
+    """Formats Bedrock response"""
     if "error" in result:
         return f"❌ {result['error']}"
 
-    response = "🤖 Análise com AWS Bedrock:\n\n"
+    response = "🤖 AI Analysis (AWS Bedrock):\n\n"
 
     if "analysis" in result:
         response += result["analysis"]
 
     if "data_summary" in result:
         summary = result["data_summary"]
-        response += f"\n\n📊 Resumo dos dados:\n"
-        response += f"• {summary['rows']} registros\n"
-        response += f"• Colunas: {', '.join(summary['columns'])}\n"
+        response += f"\n\n📊 Data Summary:\n"
+        response += f"• {summary['rows']} records\n"
+        response += f"• Columns: {', '.join(summary['columns'])}\n"
 
     return response
 
 
 def _format_insights_response(result):
-    """Formata resposta de insights automáticos"""
+    """Formats automatic insights response"""
     if "error" in result:
         return f"❌ {result['error']}"
 
-    response = "💡 Insights Automáticos (AWS Bedrock):\n\n"
+    response = "💡 Automatic Insights (AWS Bedrock):\n\n"
 
     if "insights" in result:
         response += result["insights"]
 
     if "detected_columns" in result:
         cols = result["detected_columns"]
-        response += f"\n\n🔍 Colunas detectadas:\n"
+        response += f"\n\n🔍 Detected Columns:\n"
         if cols["values"]:
-            response += f"• Valores: {', '.join(cols['values'])}\n"
+            response += f"• Values: {', '.join(cols['values'])}\n"
         if cols["dates"]:
-            response += f"• Datas: {', '.join(cols['dates'])}\n"
+            response += f"• Dates: {', '.join(cols['dates'])}\n"
 
     return response
 
 
 @csrf_exempt
 def test_view(request):
-    """View de teste para verificar se POST funciona"""
+    """Test view to verify if POST works"""
     if request.method == "POST":
-        return JsonResponse({"status": "POST funcionando", "data": dict(request.POST)})
-    return JsonResponse({"status": "GET funcionando", "method": request.method})
+        return JsonResponse({"status": "POST working", "data": dict(request.POST)})
+    return JsonResponse({"status": "GET working", "method": request.method})

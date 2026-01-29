@@ -1,88 +1,88 @@
-# 💰 Análise de Custos AWS - ContAI Finance
+# 💰 AWS Cost Analysis - ContAI Finance
 
-## 📋 Visão Geral
+## 📋 Overview
 
-Esta análise apresenta uma estimativa detalhada dos custos para implementar o ContAI Finance na AWS, baseada na arquitetura planejada e nos padrões de uso esperados para uma aplicação de contadores.
+This analysis provides a detailed cost estimation for implementing ContAI Finance on AWS, based on the planned architecture and expected usage patterns for an accounting application.
 
-## 🏗️ Arquitetura de Custos
+## 🏗️ Cost Architecture
 
-### Componentes AWS Utilizados
+### AWS Services Used
 
-| Serviço | Propósito | Tipo de Cobrança |
+| Service | Purpose | Billing Type |
 |---------|-----------|------------------|
-| **ECS Fargate** | Hospedagem da aplicação Django | vCPU + Memória por segundo |
-| **S3** | Armazenamento de arquivos CSV | Armazenamento + Requests |
-| **Bedrock** | IA para análise de dados | Tokens processados |
-| **Lambda** | Processamento serverless | Execuções + Duração |
-| **ALB** | Load Balancer | Horas + LCU processadas |
-| **CloudWatch** | Monitoramento e logs | Logs ingeridos + Métricas |
-| **VPC** | Rede privada | NAT Gateway + IPs públicos |
+| **ECS Fargate** | Django application hosting | vCPU + Memory per second |
+| **S3** | CSV file storage | Storage + Requests |
+| **Bedrock** | AI for data analysis | Processed Tokens |
+| **Lambda** | Serverless processing | Executions + Duration |
+| **ALB** | Load Balancer | Hours + LCU processed |
+| **CloudWatch** | Monitoring and logs | Ingested Logs + Metrics |
+| **VPC** | Private networking | NAT Gateway + Public IPs |
 
-## 💵 Estimativa de Custos Mensais
+## 💵 Monthly Cost Estimation
 
-### Cenário Base (50 usuários ativos/mês)
+### Base Scenario (50 active users/month)
 
-#### 1. ECS Fargate - Aplicação Principal
+#### 1. ECS Fargate - Main Application
+```text
+Configuration: 1 vCPU, 2GB RAM, 24/7
+- CPU: $0.000011244 × 1 vCPU × 2,592,000 sec/month = $29.14
+- Memory: $0.000001235 × 2GB × 2,592,000 sec/month = $6.40
+- Additional Storage: 10GB × $0.0000000308 × 2,592,000 = $0.80
 ```
-Configuração: 1 vCPU, 2GB RAM, 24/7
-- CPU: $0.000011244 × 1 vCPU × 2,592,000 seg/mês = $29.14
-- Memória: $0.000001235 × 2GB × 2,592,000 seg/mês = $6.40
-- Storage adicional: 10GB × $0.0000000308 × 2,592,000 = $0.80
-```
-**Subtotal Fargate: $36.34/mês**
+**Fargate Subtotal: $36.34/month**
 
-#### 2. S3 - Armazenamento de Arquivos
-```
-Estimativa: 1,000 arquivos CSV/mês, 1MB cada
-- Armazenamento: 1GB × $0.023 = $0.02
+#### 2. S3 - File Storage
+```text
+Estimation: 1,000 CSV files/month, 1MB each
+- Storage: 1GB × $0.023 = $0.02
 - PUT requests: 1,000 × $0.0005/1000 = $0.0005
 - GET requests: 5,000 × $0.0004/1000 = $0.002
 ```
-**Subtotal S3: $0.03/mês**
+**S3 Subtotal: $0.03/month**
 
-#### 3. AWS Bedrock - IA para Análise
+#### 3. AWS Bedrock - AI for Analysis
+```text
+Model: Claude 3 Haiku (most economical)
+- Input tokens: 50 queries × 1,000 tokens × $0.00025/1K = $0.0125
+- Output tokens: 50 queries × 500 tokens × $0.00125/1K = $0.03
 ```
-Modelo: Claude 3 Haiku (mais econômico)
-- Input tokens: 50 consultas × 1,000 tokens × $0.00025/1K = $0.0125
-- Output tokens: 50 consultas × 500 tokens × $0.00125/1K = $0.03
-```
-**Subtotal Bedrock: $0.04/mês**
+**Bedrock Subtotal: $0.04/month**
 
-#### 4. Lambda - Processamento Serverless
-```
-Funções auxiliares: 1,000 execuções/mês, 512MB, 2s duração
+#### 4. Lambda - Serverless Processing
+```text
+Auxiliary functions: 1,000 executions/month, 512MB, 2s duration
 - Requests: 1,000 × $0.0000002 = $0.0002
 - Compute: 1,000 × 2s × 512MB × $0.0000166667 = $0.017
 ```
-**Subtotal Lambda: $0.02/mês**
+**Lambda Subtotal: $0.02/month**
 
 #### 5. Application Load Balancer (ALB)
+```text
+- Hours: 730h × $0.0225 = $16.43
+- LCU: 50 users × low estimate = $5.00
 ```
-- Horas: 730h × $0.0225 = $16.43
-- LCU: 50 usuários × estimativa baixa = $5.00
-```
-**Subtotal ALB: $21.43/mês**
+**ALB Subtotal: $21.43/month**
 
-#### 6. CloudWatch - Monitoramento
+#### 6. CloudWatch - Monitoring
+```text
+- Logs: 5GB/month × $0.50 = $2.50
+- Custom metrics: 10 × $0.30 = $3.00
 ```
-- Logs: 5GB/mês × $0.50 = $2.50
-- Métricas customizadas: 10 × $0.30 = $3.00
-```
-**Subtotal CloudWatch: $5.50/mês**
+**CloudWatch Subtotal: $5.50/month**
 
-#### 7. VPC e Rede
-```
+#### 7. VPC and Networking
+```text
 - NAT Gateway: 730h × $0.045 = $32.85
 - Data transfer: 10GB × $0.09 = $0.90
-- IP público: 730h × $0.005 = $3.65
+- Public IP: 730h × $0.005 = $3.65
 ```
-**Subtotal Rede: $37.40/mês**
+**Networking Subtotal: $37.40/month**
 
-### 📊 Resumo de Custos - Cenário Base
+### 📊 Cost Summary - Base Scenario
 
-| Serviço | Custo Mensal | % do Total |
+| Service | Monthly Cost | % of Total |
 |---------|--------------|------------|
-| VPC/Rede | $37.40 | 37.1% |
+| VPC/Networking | $37.40 | 37.1% |
 | ECS Fargate | $36.34 | 36.0% |
 | ALB | $21.43 | 21.3% |
 | CloudWatch | $5.50 | 5.5% |
@@ -91,138 +91,138 @@ Funções auxiliares: 1,000 execuções/mês, 512MB, 2s duração
 | Lambda | $0.02 | 0.02% |
 | **TOTAL** | **$100.76** | **100%** |
 
-## 📈 Cenários de Escala
+## 📈 Scalability Scenarios
 
-### Cenário Pequeno (10 usuários/mês)
-- **Custo Total**: ~$85/mês
-- **Principais reduções**: Menos uso de Bedrock, ALB com menos LCU
+### Small Scenario (10 users/month)
+- **Total Cost**: ~$85/month
+- **Main reductions**: Less Bedrock usage, lower ALB LCU.
 
-### Cenário Médio (100 usuários/mês)
-- **Custo Total**: ~$125/mês
-- **Principais aumentos**: Mais uso de Bedrock, maior tráfego ALB
+### Medium Scenario (100 users/month)
+- **Total Cost**: ~$125/month
+- **Main increases**: More Bedrock usage, higher ALB traffic.
 
-### Cenário Grande (500 usuários/mês)
-- **Custo Total**: ~$200/mês
-- **Principais aumentos**: Múltiplas instâncias Fargate, mais Bedrock
+### Large Scenario (500 users/month)
+- **Total Cost**: ~$200/month
+- **Main increases**: Multiple Fargate instances, more Bedrock.
 
-## 💡 Otimizações de Custo
+## 💡 Cost Optimizations
 
-### 1. Imediatas (0-30 dias)
-- ✅ **Fargate Spot**: Até 70% desconto em workloads tolerantes
-- ✅ **Batch Bedrock**: 50% desconto para análises não críticas
-- ✅ **S3 Intelligent Tiering**: Otimização automática de storage
+### 1. Immediate (0-30 days)
+- ✅ **Fargate Spot**: Up to 70% discount for fault-tolerant workloads.
+- ✅ **Batch Bedrock**: 50% discount for non-critical analysis.
+- ✅ **S3 Intelligent Tiering**: Automatic storage optimization.
 
-### 2. Médio Prazo (1-6 meses)
-- 🔄 **Savings Plans**: Até 50% desconto com compromisso de 1-3 anos
-- 🔄 **Reserved Instances**: Para componentes com uso previsível
-- 🔄 **CloudFront**: Cache para reduzir custos de transfer
+### 2. Medium Term (1-6 months)
+- 🔄 **Savings Plans**: Up to 50% discount with a 1-3 year commitment.
+- 🔄 **Reserved Instances**: For components with predictable usage.
+- 🔄 **CloudFront**: Caching to reduce data transfer costs.
 
-### 3. Longo Prazo (6+ meses)
-- 📈 **Auto Scaling**: Ajuste automático baseado na demanda
-- 📈 **Multi-AZ otimizado**: Balanceamento de custos vs disponibilidade
-- 📈 **Serverless completo**: Migração para Lambda + API Gateway
+### 3. Long Term (6+ months)
+- 📈 **Auto Scaling**: Automatic adjustment based on demand.
+- 📈 **Optimized Multi-AZ**: Balancing costs vs availability.
+- 📈 **Full Serverless**: Migration to Lambda + API Gateway.
 
-## 🎯 Estimativas por Perfil de Uso
+## 🎯 Estimates by Usage Profile
 
-### Contador Individual
-```
-Uso: 5 análises/mês, 10 arquivos
-Custo estimado: $75-85/mês
-ROI: Economia de 20h/mês × $50/h = $1,000
-```
-
-### Escritório Pequeno (2-5 contadores)
-```
-Uso: 50 análises/mês, 100 arquivos
-Custo estimado: $100-125/mês
-ROI: Economia de 100h/mês × $50/h = $5,000
+### Individual Accountant
+```text
+Usage: 5 analyses/month, 10 files
+Estimated cost: $75-85/month
+ROI: 20h/month saved × $50/h = $1,000 savings
 ```
 
-### Escritório Médio (10-20 contadores)
-```
-Uso: 200 análises/mês, 500 arquivos
-Custo estimado: $150-200/mês
-ROI: Economia de 400h/mês × $50/h = $20,000
+### Small Office (2-5 accountants)
+```text
+Usage: 50 analyses/month, 100 files
+Estimated cost: $100-125/month
+ROI: 100h/month saved × $50/h = $5,000 savings
 ```
 
-## 📊 Comparação com Alternativas
+### Medium Office (10-20 accountants)
+```text
+Usage: 200 analyses/month, 500 files
+Estimated cost: $150-200/month
+ROI: 400h/month saved × $50/h = $20,000 savings
+```
 
-### Hospedagem Tradicional
-| Componente | AWS | VPS Tradicional | Diferença |
+## 📊 Comparison with Alternatives
+
+### Traditional Hosting
+| Component | AWS | Traditional VPS | Difference |
 |------------|-----|-----------------|-----------|
-| Servidor | $36 | $50 | -$14 |
-| Backup | Incluído | $10 | -$10 |
-| Monitoramento | $5.50 | $15 | -$9.50 |
-| Segurança | Incluído | $20 | -$20 |
+| Server | $36 | $50 | -$14 |
+| Backup | Included | $10 | -$10 |
+| Monitoring | $5.50 | $15 | -$9.50 |
+| Security | Included | $20 | -$20 |
 | IA/ML | $0.04 | N/A | +$0.04 |
 | **Total** | **$100** | **$95** | **+$5** |
 
-**Vantagens AWS**: Escalabilidade, IA integrada, segurança, backup automático
-**Desvantagem**: Custo ligeiramente superior
+**AWS Advantages**: Scalability, integrated AI, security, automatic backup.
+**Disadvantage**: Slightly higher cost.
 
-### SaaS Concorrente
-| Aspecto | ContAI Finance (AWS) | SaaS Típico |
+### Competitor SaaS
+| Aspect | ContAI Finance (AWS) | Typical SaaS |
 |---------|---------------------|-------------|
-| Custo/usuário | $2-4/mês | $15-30/mês |
-| Customização | Total | Limitada |
-| Dados | Próprios | Terceiros |
-| Integração | Completa | APIs limitadas |
+| Cost/user | $2-4/month | $15-30/month |
+| Customization | Full | Limited |
+| Data Ownership | Yours | Third-party |
+| Integration | Complete | Limited APIs |
 
-## 🔍 Fatores de Custo Variáveis
+## 🔍 Variable Cost Factors
 
-### Alto Impacto
-1. **Número de usuários simultâneos** → Instâncias Fargate
-2. **Volume de análises IA** → Custos Bedrock
-3. **Tamanho dos arquivos** → Storage S3 e transfer
+### High Impact
+1. **Concurrent users** → Fargate instances.
+2. **AI analysis volume** → Bedrock costs.
+3. **File size** → S3 storage and transfer.
 
-### Médio Impacto
-4. **Região AWS** → Variação de 10-30% nos preços
-5. **Padrão de uso** → Picos vs uso constante
-6. **Retenção de dados** → Custos de storage crescentes
+### Medium Impact
+4. **AWS Region** → 10-30% price variation.
+5. **Usage pattern** → Spikes vs constant usage.
+6. **Data retention** → Increasing storage costs.
 
-### Baixo Impacto
-7. **Número de requests** → Custos de API
-8. **Logs detalhados** → CloudWatch
-9. **Métricas customizadas** → Monitoramento
+### Low Impact
+7. **Request count** → API costs.
+8. **Detailed logs** → CloudWatch.
+9. **Custom metrics** → Monitoring.
 
-## 🎯 Recomendações Finais
+## 🎯 Final Recommendations
 
-### Para Começar (MVP)
-```
-Configuração mínima: $75-85/mês
+### For Starters (MVP)
+```text
+Minimum configuration: $75-85/month
 - Fargate: 0.5 vCPU, 1GB RAM
-- S3: Tier padrão
-- Bedrock: Modelo básico
-- Monitoramento essencial
+- S3: Standard Tier
+- Bedrock: Basic model
+- Essential monitoring
 ```
 
-### Para Produção (Recomendado)
-```
-Configuração balanceada: $100-125/mês
+### For Production (Recommended)
+```text
+Balanced configuration: $100-125/month
 - Fargate: 1 vCPU, 2GB RAM + Auto Scaling
 - S3: Intelligent Tiering
 - Bedrock: Claude 3 Haiku
-- Monitoramento completo + alertas
+- Full monitoring + alerts
 ```
 
-### Para Escala (Crescimento)
-```
-Configuração otimizada: $150-200/mês
-- Múltiplas instâncias Fargate
-- CDN CloudFront
-- Bedrock com modelos avançados
-- Backup e DR completos
+### For Scaling (Growth)
+```text
+Optimized configuration: $150-200/month
+- Multiple Fargate instances
+- CloudFront CDN
+- Bedrock with advanced models
+- Full Backup and DR
 ```
 
-## 📞 Próximos Passos
+## 📞 Next Steps
 
-1. **Usar AWS Pricing Calculator**: [calculator.aws](https://calculator.aws)
-2. **Implementar Cost Budgets**: Alertas automáticos
-3. **Monitorar com Cost Explorer**: Análise detalhada
-4. **Revisar mensalmente**: Otimizações contínuas
+1. **Use AWS Pricing Calculator**: [calculator.aws](https://calculator.aws)
+2. **Implement Cost Budgets**: Automatic alerts.
+3. **Monitor with Cost Explorer**: Detailed analysis.
+4. **Monthly Review**: Continuous optimizations.
 
 ---
 
-**Região base**: us-east-1 (N. Virginia)  
-**Moeda**: USD (converter para BRL conforme câmbio)  
-**Disclaimer**: Preços podem variar. Consulte sempre a documentação oficial da AWS.
+**Base Region**: us-east-1 (N. Virginia)  
+**Currency**: USD  
+**Disclaimer**: Prices may vary. Always refer to official AWS documentation.

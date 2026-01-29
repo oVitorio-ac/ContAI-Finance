@@ -1,150 +1,150 @@
-# 📋 Documentação da API - ContAI Finance
+# 📋 API Documentation - ContAI Finance
 
-## Visão Geral
+## Overview
 
-A API do ContAI Finance é uma aplicação Django RESTful que permite upload de arquivos CSV e interação com assistente de IA para análise de dados financeiros.
+The ContAI Finance API is a Django-based service that enables CSV file uploads and interaction with an AI assistant for financial data analysis.
 
-**Base URL:** `http://localhost:8000/` (desenvolvimento)
+**Base URL:** `http://localhost:8000/` (Development)
 
-**Formato de Resposta:** JSON
+**Response Format:** JSON
 
-**Autenticação:** Nenhuma (para desenvolvimento)
+**Authentication:** None (for development)
 
 ---
 
 ## 📚 Endpoints
 
-### 1. Upload de Arquivos
+### 1. File Upload
 
 #### `GET /`
-Carrega a página de upload com formulário.
+Loads the upload page containing the file upload form.
 
-**Resposta (HTML):**
+**Response (HTML):**
 ```html
-<!-- Página HTML com formulário de upload -->
+<!-- HTML page with upload form -->
 ```
 
 #### `POST /`
-Processa o upload de arquivo CSV.
+Processes the upload of a CSV file.
 
-**Parâmetros do Formulário:**
+**Form Parameters:**
 ```json
 {
-  "titulo": "string",      // Título descritivo do arquivo
-  "arquivo": "file"        // Arquivo CSV a ser enviado
+  "titulo": "string",      // Descriptive title of the file
+  "arquivo": "file"        // CSV file to be uploaded
 }
 ```
 
-**Resposta de Sucesso (302):**
-```
+**Success Response (302):**
+```text
 HTTP 302 Found
 Location: /chat/
 ```
 
-**Resposta de Erro (400):**
+**Error Response (400):**
 ```json
 {
-  "error": "Formulário inválido"
+  "error": "Invalid form"
 }
 ```
 
 ---
 
-### 2. Interface de Chat
+### 2. Chat Interface
 
 #### `GET /chat/`
-Carrega a página de chat com lista de arquivos disponíveis.
+Loads the chat page with a list of available files.
 
-**Resposta (HTML):**
+**Response (HTML):**
 ```html
-<!-- Página HTML com interface de chat e lista de arquivos -->
+<!-- HTML page with chat interface and file list -->
 ```
 
-**Arquivos Disponíveis:**
+**Available Files:**
 ```json
 {
   "arquivos": [
-    "financeiro.csv",
-    "dados_financeiros.csv"
+    "finance.csv",
+    "financial_data.csv"
   ]
 }
 ```
 
 #### `POST /chat/`
-Processa perguntas sobre arquivos CSV usando IA.
+Processes questions about CSV files using AI.
 
-**Parâmetros do Formulário:**
+**Form Parameters:**
 ```json
 {
-  "pergunta": "string",     // Pergunta do usuário
-  "arquivo": "string"       // Nome do arquivo CSV
+  "pergunta": "string",     // User's question
+  "arquivo": "string"       // CSV filename
 }
 ```
 
-**Exemplos de Perguntas:**
-- "Qual é o total de receitas?"
-- "Faça uma análise completa"
-- "Quais são as maiores despesas?"
-- "Gere insights automáticos"
+**Example Questions:**
+- "What is the total revenue?"
+- "Provide a full analysis"
+- "What are the largest expenses?"
+- "Generate automatic insights"
 
-**Resposta de Sucesso (200):**
+**Success Response (200):**
 ```json
 {
-  "resposta": "📊 Análise do arquivo financeiro.csv:\n📈 Dimensões: 100 linhas, 5 colunas\n📋 Colunas: Data, Descrição, Valor, Tipo\n\n💰 Análise Financeira:\n• Valor: Total R$ 15.000,00, Média R$ 150,00\n  Positivos: 60, Negativos: 40"
+  "resposta": "📊 Analysis of file finance.csv:\n📈 Dimensions: 100 rows, 5 columns\n📋 Columns: Date, Description, Amount, Type\n\n💰 Financial Analysis:\n• Amount: Total R$ 15,000.00, Average R$ 150.00\n  Positives: 60, Negatives: 40"
 }
 ```
 
-**Resposta de Erro (500):**
+**Error Response (500):**
 ```json
 {
-  "resposta": "Erro ao processar: [mensagem de erro]"
+  "resposta": "Error processing: [error message]"
 }
 ```
 
 ---
 
-### 3. Endpoint de Teste
+### 3. Test Endpoint
 
 #### `GET /test/`
-Verifica se o servidor está funcionando (GET).
+Verifies if the server is running (GET).
 
-**Resposta (200):**
+**Response (200):**
 ```json
 {
-  "status": "GET funcionando",
+  "status": "GET working",
   "method": "GET"
 }
 ```
 
 #### `POST /test/`
-Verifica se o servidor está funcionando (POST).
+Verifies if the server is running (POST).
 
-**Parâmetros:**
+**Parameters:**
 ```json
 {
-  "qualquer_campo": "qualquer_valor"
+  "any_field": "any_value"
 }
 ```
 
-**Resposta (200):**
+**Response (200):**
 ```json
 {
-  "status": "POST funcionando",
+  "status": "POST working",
   "data": {
-    "campo1": ["valor1"],
-    "campo2": ["valor2"]
+    "field1": ["value1"],
+    "field2": ["value2"]
   }
 }
 ```
 
 ---
 
-### 4. Endpoint de Debug
+### 4. Debug Endpoint
 
 #### `GET /debug/`
-Endpoint de debug para desenvolvimento.
+Debug endpoint for development.
 
-**Resposta (200):**
+**Response (200):**
 ```json
 {
   "method": "GET",
@@ -154,58 +154,58 @@ Endpoint de debug para desenvolvimento.
 ```
 
 #### `POST /debug/`
-Endpoint de debug para desenvolvimento.
+Debug endpoint for development.
 
-**Parâmetros:**
+**Parameters:**
 ```json
 {
-  "qualquer_campo": "qualquer_valor"
+  "any_field": "any_value"
 }
 ```
 
-**Resposta (200):**
+**Response (200):**
 ```json
 {
   "method": "POST",
   "status": "OK",
   "data": {
-    "campo1": ["valor1"]
+    "field1": ["value1"]
   }
 }
 ```
 
 ---
 
-## 🔧 Funcionalidades da API
+## 🔧 API Features
 
-### Análise de CSV
-- **Análise completa**: Estatísticas gerais do arquivo
-- **Consultas específicas**: Totais, médias, máximos, mínimos
-- **Análise financeira**: Valores positivos/negativos
-- **Insights automáticos**: Usando AWS Bedrock
+### CSV Analysis
+- **Full Analysis**: General file statistics.
+- **Specific Queries**: Totals, averages, maximums, minimums.
+- **Financial Analysis**: Positive/Negative values.
+- **Automatic Insights**: Using AWS Bedrock.
 
-### Tipos de Perguntas Suportadas
-- `análise` - Análise completa do arquivo
-- `total` - Cálculo de totais por coluna
-- `média` - Cálculo de médias por coluna
-- `insights` - Geração de insights com IA
-- Consultas livres interpretadas pelo sistema
+### Supported Question Types
+- `analysis` - Full file analysis.
+- `total` - Total calculation per column.
+- `average` - Average calculation per column.
+- `insights` - Generate AI-driven insights.
+- Natural language queries interpreted by the system.
 
 ---
 
-## 📊 Modelos de Dados
+## 📊 Data Models
 
 ### UploadArquivo
-```python
+```json
 {
-  "id": "integer",           // ID único
-  "titulo": "string",        // Título do arquivo
-  "arquivo": "string",       // Caminho do arquivo
-  "data_upload": "datetime"  // Data de upload
+  "id": "integer",           // Unique ID
+  "titulo": "string",        // File title
+  "arquivo": "string",       // File path
+  "data_upload": "datetime"  // Upload date
 }
 ```
 
-### Resposta de Análise
+### Analysis Response
 ```json
 {
   "filename": "string",
@@ -215,7 +215,7 @@ Endpoint de debug para desenvolvimento.
   },
   "columns": ["string"],
   "value_columns": ["string"],
-  "valor_analysis": {
+  "amount_analysis": {
     "total": "float",
     "average": "float",
     "positive_count": "integer",
@@ -226,40 +226,40 @@ Endpoint de debug para desenvolvimento.
 
 ---
 
-## ⚠️ Tratamento de Erros
+## ⚠️ Error Handling
 
-### Códigos de Status HTTP
-- `200` - Sucesso
-- `302` - Redirecionamento (após upload)
-- `400` - Dados inválidos
-- `404` - Recurso não encontrado
-- `500` - Erro interno do servidor
+### HTTP Status Codes
+- `200` - Success
+- `302` - Redirect (after upload)
+- `400` - Invalid data
+- `404` - Resource not found
+- `500` - Internal Server Error
 
-### Estrutura de Erro
+### Error Structure
 ```json
 {
-  "error": "Mensagem descritiva do erro",
-  "details": "Informações adicionais (opcional)"
+  "error": "Descriptive error message",
+  "details": "Additional info (optional)"
 }
 ```
 
-### Erros Comuns
-- **Arquivo não encontrado**: Verifique se o arquivo foi selecionado
-- **Formato inválido**: Arquivo deve ser CSV válido
-- **Erro de processamento**: Problema na análise do arquivo
-- **Erro de IA**: Problema na integração com AWS Bedrock
+### Common Errors
+- **File not found**: Ensure a file was selected.
+- **Invalid format**: File must be a valid CSV.
+- **Processing error**: Issue during file analysis.
+- **AI error**: Issue with AWS Bedrock integration.
 
 ---
 
-## 🔒 Segurança
+## 🔒 Security
 
-### Medidas Implementadas
-- **CSRF Protection**: Habilitado para formulários
-- **File Upload Validation**: Validação de tipos e tamanhos
-- **SQL Injection Protection**: ORM Django
-- **XSS Protection**: Templates seguros
+### Implemented Measures
+- **CSRF Protection**: Enabled for forms.
+- **File Upload Validation**: Type and size validation.
+- **SQL Injection Protection**: Django ORM.
+- **XSS Protection**: Secure templates.
 
-### Configurações de Segurança
+### Security Settings
 ```python
 # settings.py
 CSRF_COOKIE_SECURE = True
@@ -269,61 +269,61 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 ---
 
-## 📈 Limites e Restrições
+## 📈 Limits and Restrictions
 
-### Upload de Arquivos
-- **Tamanho máximo**: 10MB por arquivo
-- **Formatos aceitos**: CSV apenas
-- **Encoding**: UTF-8 recomendado
+### File Uploads
+- **Maximum size**: 10MB per file.
+- **Accepted formats**: CSV only.
+- **Encoding**: UTF-8 recommended.
 
 ### Rate Limiting
-- Não implementado (desenvolvimento)
-- Recomendado para produção
+- Not implemented (Development).
+- Recommended for production.
 
 ### Timeout
-- **Análise CSV**: Máximo 30 segundos
-- **Bedrock IA**: Máximo 60 segundos
+- **CSV Analysis**: Maximum 30 seconds.
+- **Bedrock AI**: Maximum 60 seconds.
 
 ---
 
-## 🧪 Testes da API
+## 🧪 API Testing
 
-### Testes Unitários
+### Unit Tests
 ```bash
-# Testar endpoints específicos
+# Test specific endpoints
 pytest tests/test_views.py::TestUploadView::test_upload_view_get
 pytest tests/test_views.py::TestChatView::test_chat_view_post_valido
 ```
 
-### Testes de Integração
+### Integration Tests
 ```bash
-# Testar fluxos completos
+# Test full workflows
 pytest tests/test_e2e.py::TestE2E::test_fluxo_upload_e_chat_completo
 ```
 
-### Testes E2E
+### E2E Tests
 ```bash
-# Executar todos os testes E2E
+# Run all E2E tests
 pytest -m e2e
 ```
 
 ---
 
-## 🚀 Exemplos de Uso
+## 🚀 Usage Examples
 
 ### Python (requests)
 ```python
 import requests
 
-# Upload de arquivo
-files = {'arquivo': open('dados.csv', 'rb')}
-data = {'titulo': 'Dados Financeiros'}
+# File upload
+files = {'arquivo': open('data.csv', 'rb')}
+data = {'titulo': 'Financial Data'}
 response = requests.post('http://localhost:8000/', files=files, data=data)
 
-# Fazer pergunta
+# Ask question
 data = {
-    'pergunta': 'Qual é o total de receitas?',
-    'arquivo': 'dados.csv'
+    'pergunta': 'What is the total revenue?',
+    'arquivo': 'data.csv'
 }
 response = requests.post('http://localhost:8000/chat/', data=data)
 print(response.json())
@@ -333,25 +333,25 @@ print(response.json())
 ```bash
 # Upload
 curl -X POST http://localhost:8000/ \
-  -F "titulo=Dados Financeiros" \
-  -F "arquivo=@dados.csv"
+  -F "titulo=Financial Data" \
+  -F "arquivo=@data.csv"
 
 # Chat
 curl -X POST http://localhost:8000/chat/ \
-  -d "pergunta=Qual é o total?&arquivo=dados.csv"
+  -d "pergunta=What is the total?&arquivo=data.csv"
 ```
 
 ---
 
-## 📝 Notas de Desenvolvimento
+## 📝 Development Notes
 
-- **CSRF Exempt**: Alguns endpoints usam `@csrf_exempt` para facilitar testes
-- **CORS**: Não configurado (desenvolvimento local)
-- **Logging**: Todos os requests são logados
-- **Debug Mode**: Configurações de debug habilitadas
+- **CSRF Exempt**: Some endpoints use `@csrf_exempt` for easier testing.
+- **CORS**: Not configured (local development).
+- **Logging**: All requests are logged.
+- **Debug Mode**: Debug settings enabled.
 
 ---
 
-**Última atualização:** Janeiro 2024
-**Versão da API:** 1.0
-**Status:** Desenvolvimento
+**Last Update:** January 2026
+**API Version:** 1.0
+**Status:** Development

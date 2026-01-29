@@ -1,60 +1,60 @@
-# 💰 Resumo Executivo - Custos AWS ContAI Finance
+# 💰 Executive Summary - AWS Costs ContAI Finance
 
-## 🎯 Estimativa Rápida
+## 🎯 Quick Estimation
 
-### Custo Base Mensal: **$100-125 USD**
+### Base Monthly Cost: **$100-125 USD**
 
-| Cenário | Usuários | Custo/Mês | Custo/Usuário |
+| Scenario | Users | Cost/Month | Cost/User |
 |---------|----------|-----------|---------------|
-| **Pequeno** | 10 | $85 | $8.50 |
-| **Médio** | 50 | $101 | $2.02 |
-| **Grande** | 100 | $125 | $1.25 |
-| **Escala** | 500 | $200 | $0.40 |
+| **Small** | 10 | $85 | $8.50 |
+| **Medium** | 50 | $101 | $2.02 |
+| **Large** | 100 | $125 | $1.25 |
+| **Scaling** | 500 | $200 | $0.40 |
 
-## 📊 Distribuição de Custos
+## 📊 Cost Distribution
 
-```
-🏗️ Infraestrutura (74%): $74.77
-├── VPC/Rede: $37.40 (37%)
+```text
+🏗️ Infrastructure (74%): $74.77
+├── VPC/Networking: $37.40 (37%)
 ├── ECS Fargate: $36.34 (36%)
 └── Load Balancer: $21.43 (21%)
 
-📊 Operações (26%): $25.99
+📊 Operations (26%): $25.99
 ├── CloudWatch: $5.50 (5.5%)
 ├── S3 Storage: $0.03 (0.03%)
-├── Bedrock IA: $0.04 (0.04%)
+├── Bedrock AI: $0.04 (0.04%)
 └── Lambda: $0.02 (0.02%)
 ```
 
-## 💡 ROI Estimado
+## 💡 Estimated ROI
 
-### Para Escritório de Contabilidade (10 contadores)
-- **Custo AWS**: $125/mês
-- **Economia de tempo**: 200h/mês × $50/h = $10,000
-- **ROI**: 8,000% (80x retorno)
+### For Accounting Office (10 accountants)
+- **AWS Cost**: $125/month
+- **Time Savings**: 200h/month × $50/h = $10,000
+- **ROI**: 8,000% (80x return)
 
-### Comparação com Alternativas
-| Solução | Custo/Mês | Limitações |
+### Comparison with Alternatives
+| Solution | Cost/Month | Limitations |
 |---------|-----------|------------|
-| **ContAI Finance** | $125 | Nenhuma |
-| SaaS Concorrente | $300-600 | Dados externos, pouca customização |
-| Desenvolvimento próprio | $2,000+ | Tempo, expertise, manutenção |
+| **ContAI Finance** | $125 | None |
+| Typical SaaS competitor | $300-600 | External data, little customization |
+| Custom development | $2,000+ | Time, expertise, maintenance |
 
-## 🚀 Otimizações Imediatas
+## 🚀 Immediate Optimizations
 
-1. **Fargate Spot**: -70% = **$25 economia**
-2. **Bedrock Batch**: -50% = **$0.02 economia**
-3. **S3 Intelligent Tiering**: -30% = **$0.01 economia**
+1. **Fargate Spot**: -70% = **$25 savings**
+2. **Bedrock Batch**: -50% = **$0.02 savings**
+3. **S3 Intelligent Tiering**: -30% = **$0.01 savings**
 
-**Total de economia**: ~$25/mês (25% redução)
+**Total Savings**: ~$25/month (25% reduction)
 
-## 🎯 Recomendação
+## 🎯 Recommendation
 
-**Implementar na AWS é altamente viável:**
-- Custo competitivo vs alternativas
-- ROI excepcional (80x)
-- Escalabilidade automática
-- Segurança enterprise
-- IA integrada
+**Implementing on AWS is highly viable:**
+- Competitive cost vs alternatives.
+- Exceptional ROI (80x).
+- Automatic scalability.
+- Enterprise-grade security.
+- Integrated AI.
 
-**Próximo passo**: Usar [AWS Pricing Calculator](https://calculator.aws) para estimativa personalizada.
+**Next step**: Use [AWS Pricing Calculator](https://calculator.aws) for a custom estimation.

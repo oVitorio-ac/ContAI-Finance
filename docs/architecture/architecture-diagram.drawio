@@ -7,7 +7,7 @@
         <mxCell id="1" parent="0" />
         
         <!-- User Layer -->
-        <mxCell id="user" value="👤 Contador" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+        <mxCell id="user" value="👤 Accountant" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
           <mxGeometry x="80" y="40" width="120" height="60" as="geometry" />
         </mxCell>
         
@@ -97,15 +97,15 @@
         </mxCell>
         
         <!-- Legend -->
-        <mxCell id="legend-title" value="Legenda:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;" vertex="1" parent="1">
+        <mxCell id="legend-title" value="Legend:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="80" y="400" width="60" height="20" as="geometry" />
         </mxCell>
         
-        <mxCell id="legend-implemented" value="— Implementado" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="legend-implemented" value="— Implemented" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="80" y="420" width="100" height="20" as="geometry" />
         </mxCell>
         
-        <mxCell id="legend-future" value="--- Futuro" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;" vertex="1" parent="1">
+        <mxCell id="legend-future" value="--- Future" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="80" y="440" width="100" height="20" as="geometry" />
         </mxCell>
         

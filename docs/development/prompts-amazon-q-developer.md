@@ -1,111 +1,116 @@
-# 🤖 Prompts Utilizados com Amazon Q Developer
+# 🤖 Prompts Used with Amazon Q Developer
 
-Este documento contém o histórico completo dos prompts utilizados durante o desenvolvimento do projeto ContAI Finance com o Amazon Q Developer.
+This document contains the complete history of prompts used during the development of the ContAI Finance project with Amazon Q Developer.
 
-## 📋 Visão Geral
+## 📋 Overview
 
-Os prompts foram organizados por etapas do desenvolvimento, seguindo a estrutura do TDC 2025 - Q Developer Quest. Cada prompt representa uma interação específica com o assistente de IA durante a implementação do projeto.
+The prompts are organized by development tiers, following the TDC 2025 - Q Developer Quest structure. Each prompt represents a specific interaction with the AI assistant during project implementation.
 
-## 🔄 Etapas do Desenvolvimento
+## 🔄 Development Tiers
 
-### Etapa 1 - Configuração Inicial
+### Tier 1 - Initial Configuration
 
-#### Prompt 1: Ajuda para Executar o Projeto
-```
+#### Prompt 1: Running the Project
+```text
 i need help for run my project
 ```
-**Contexto**: Solicitação inicial de ajuda para executar o projeto Django.
+**Context**: Initial request for assistance in running the Django project.
 
-#### Prompt 2: Resolução de Erros de Execução
-```
+#### Prompt 2: Resolving Runtime Errors
+```text
 ok , my project is ruuning now . but very much error . why?
 ```
-**Contexto**: Após tentar executar o projeto, surgiram múltiplos erros que precisavam ser diagnosticados.
+**Context**: After attempting to run the project, multiple errors appeared and needed to be diagnosed.
 
-#### Prompt 3: Problema de ALLOWED_HOSTS
-```
+#### Prompt 3: ALLOWED_HOSTS Issue
+```text
 Invalid HTTP_HOST header: 'd3vq5f4ity3pv8.cloudfront.net'. You may need to add 'd3vq5f4ity3pv8.cloudfront.net' to ALLOWED_HOSTS.
 ```
-**Contexto**: Erro específico relacionado à configuração de hosts permitidos no Django.
+**Context**: Specific error related to the configuration of allowed hosts in Django.
 
-#### Prompt 4: Centralização do Layout Frontend
-```
+#### Prompt 4: Centralized Frontend Layout
+```text
 no front pode deixar tudo centralizado na tela
 ```
-**Contexto**: Solicitação para melhorar o layout da interface, centralizando os elementos na tela.
+(Translation: "In the frontend, can you center everything on the screen?")
+**Context**: Request to improve the user interface layout by centering elements on the screen.
 
-#### Prompt 5: Verificação da Etapa 1
-```
+#### Prompt 5: Tier 1 Verification
+```text
 etapa 1 do projeto essa que fizemos ?
 ```
-**Contexto**: Confirmação sobre o progresso da primeira etapa do projeto.
+(Translation: "Is this Tier 1 of the project that we completed?")
+**Context**: Confirmation of progress regarding Tier 1 of the project.
 
-### Etapa 2 - Arquitetura e Testes
+### Tier 2 - Architecture and Testing
 
-#### Prompt 6: Implementação da Etapa 2 Completa
-```
+#### Prompt 6: Full Tier 2 Implementation
+```text
 pode me ajudar a montar isso Etapa 2: Mochilinha exclusiva AWS Tudo da Etapa 1 Diagrama de arquitetura (drawio, mermaid, etc...) Um ou mais testes automatizados (unidade, integração, E2E) e coloca na pasta docs por favor e analiza o que eu pensei e ve se faz sentido para esse projeto
 ```
-**Contexto**: Solicitação abrangente para implementar toda a Etapa 2, incluindo arquitetura e testes.
+(Translation: "Can you help me set this up: Tier 2. Everything from Tier 1, Architecture Diagram (drawio, mermaid, etc...), one or more automated tests (unit, integration, E2E), put it in the docs folder please, analyze my idea and see if it makes sense for this project.")
+**Context**: Comprehensive request to implement all of Tier 2, including architecture and testing.
 
-#### Prompt 7: Problema na Rota do Chat
-```
+#### Prompt 7: Chat Route Issue
+```text
 bom nao consigo acessa rota do chat?
 ```
-**Contexto**: Dificuldade em acessar a rota de chat da aplicação.
+(Translation: "Well, I can't access the chat route?")
+**Context**: Difficulty in accessing the application's chat route.
 
-#### Prompt 8: Diagramas e Testes Centralizados
-```
+#### Prompt 8: Centralized Diagrams and Tests
+```text
 pode fazer o seguinte diagrama para o formato do drawio e usa o pytest para os teste automatizados centraliza toda a documentação do projeto na pasta docs E gera o readme
 ```
-**Contexto**: Solicitação para criar diagramas em DrawIO, implementar testes com pytest, centralizar documentação e gerar README.
+(Translation: "Can you make the following diagram in DrawIO format, use pytest for automated tests, centralize all project documentation in the docs folder, and generate the readme.")
+**Context**: Request to create DrawIO diagrams, implement tests with pytest, centralize documentation, and generate the README.
 
-## ✅ Soluções Implementadas
+## ✅ Implemented Solutions
 
-### Correções Técnicas
-- ✅ **Diretórios ausentes**: Criação de pastas `static/` e `media/`
-- ✅ **Migrações do banco**: Configuração correta do SQLite
-- ✅ **URLs e redirecionamentos**: Ajuste das rotas da aplicação
-- ✅ **Layout centralizado**: Melhoria da interface frontend
+### Technical Fixes
+- ✅ **Missing Directories**: Created `static/` and `media/` folders.
+- ✅ **Database Migrations**: Correct configuration of SQLite.
+- ✅ **URLs and Redirects**: Adjusted application routes.
+- ✅ **Centralized Layout**: Improved frontend interface.
 
-### Documentação e Arquitetura
-- ✅ **Diagramas Mermaid**: Diagramas de arquitetura visuais
-- ✅ **Suite de testes**: 19 testes automatizados com pytest
-- ✅ **Documentação técnica**: Centralizada na pasta `docs/`
-- ✅ **README atualizado**: Com screenshots e instruções
+### Documentation and Architecture
+- ✅ **Mermaid Diagrams**: Visual architecture diagrams.
+- ✅ **Test Suite**: 19 automated tests with pytest.
+- ✅ **Technical Documentation**: Centralized in the `docs/` folder.
+- ✅ **Updated README**: Included screenshots and instructions.
 
-## 📊 Estatísticas dos Prompts
+## 📊 Prompt Statistics
 
-| Etapa | Número de Prompts | Foco Principal |
+| Tier | Number of Prompts | Main Focus |
 |-------|------------------|----------------|
-| **Etapa 1** | 5 prompts | Configuração inicial e correções básicas |
-| **Etapa 2** | 3 prompts | Arquitetura, testes e documentação |
-| **Total** | 8 prompts | Desenvolvimento completo do projeto |
+| **Tier 1** | 5 prompts | Initial setup and basic fixes |
+| **Tier 2** | 3 prompts | Architecture, testing, and documentation |
+| **Total** | 8 prompts | Full project development |
 
-## 🎯 Padrões Observados
+## 🎯 Observed Patterns
 
-### Tipos de Prompts Utilizados
-1. **Diagnóstico de problemas**: Identificação e resolução de erros
-2. **Solicitações funcionais**: Implementação de novos recursos
-3. **Melhorias de UX**: Ajustes na interface do usuário
-4. **Documentação**: Criação de diagramas e documentação técnica
-5. **Testes**: Implementação de testes automatizados
+### Types of Prompts Used
+1. **Problem Diagnosis**: Identifying and resolving errors.
+2. **Functional Requests**: Implementing new features.
+3. **UX Improvements**: Adjustments to the user interface.
+4. **Documentation**: Creating diagrams and technical documentation.
+5. **Testing**: Implementing automated tests.
 
-### Estratégias Eficazes
-- **Prompts específicos**: Descrições detalhadas do problema
-- **Contexto fornecido**: Informações sobre o estado atual
-- **Objetivos claros**: Resultados esperados bem definidos
-- **Iteração progressiva**: Desenvolvimento incremental
+### Effective Strategies
+- **Specific Prompts**: Detailed descriptions of the problem.
+- **Context Provided**: Information about the current state.
+- **Clear Objectives**: Well-defined expected results.
+- **Progressive Iteration**: Incremental development.
 
-## 🔗 Relacionamentos com Outros Documentos
+## 🔗 Relations to Other Documents
 
-- **[CHANGELOG.md](CHANGELOG.md)**: Histórico de mudanças implementadas
-- **[technical-documentation.md](technical-documentation.md)**: Documentação técnica detalhada
-- **[testing.md](testing.md)**: Documentação completa dos testes
-- **[architecture-mermaid.md](architecture-mermaid.md)**: Diagramas de arquitetura
+- **[CHANGELOG.md](CHANGELOG.md)**: History of implemented changes.
+- **[technical-documentation.md](technical-documentation.md)**: Detailed technical documentation.
+- **[testing.md](testing.md)**: Comprehensive test documentation.
+- **[architecture-mermaid.md](architecture-mermaid.md)**: Architecture diagrams.
 
-## 📝 Notas de Desenvolvimento
+## 📝 Development Notes
 
-Este histórico demonstra como o Amazon Q Developer foi utilizado de forma estratégica durante todo o ciclo de desenvolvimento, desde a configuração inicial até a implementação completa das funcionalidades e documentação.
+This history demonstrates how Amazon Q Developer was utilized strategically throughout the entire development cycle, from initial setup to the full implementation of features and documentation.
 
 ---

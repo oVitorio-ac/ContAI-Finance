@@ -1,257 +1,257 @@
-# 🛠️ Guia de Desenvolvimento - ContAI Finance
+# 🛠️ Development Guide - ContAI Finance
 
-Este documento contém instruções detalhadas para configurar e trabalhar no projeto usando Poetry.
+This document contains detailed instructions for setting up and working on the project using Poetry.
 
-## 📋 Pré-requisitos
+## 📋 Prerequisites
 
-- **Python 3.8+**
-- **Poetry** (gerenciador de dependências)
+- **Python 3.12+**
+- **Poetry** (package manager)
 - **Git**
 
-## 🚀 Configuração Inicial
+## 🚀 Initial Setup
 
-### 1. Instalar Poetry
+### 1. Install Poetry
 
 ```bash
-# Instalar Poetry
+# Install Poetry
 curl -sSL https://install.python-poetry.org | python3 -
 
-# Verificar instalação
+# Verify installation
 poetry --version
 ```
 
-### 2. Clonar e Configurar Projeto
+### 2. Clone and Configure Project
 
 ```bash
-# Clonar repositório
-git clone https://github.com/seu-usuario/ContAI-Finance.git
+# Clone the repository
+git clone https://github.com/oVitorio-ac/ContAI-Finance.git
 cd ContAI-Finance
 
-# Instalar dependências de desenvolvimento
-poetry install --with dev
+# Install development dependencies
+poetry install
 
-# Ativar shell do Poetry (opcional)
+# Activate the Poetry shell (optional)
 poetry shell
 ```
 
-### 3. Configurar Ambiente
+### 3. Environment Configuration
 
 ```bash
-# Copiar arquivo de exemplo de variáveis de ambiente
+# Copy the example environment variables file
 cp .env.example .env
 
-# Editar .env com suas configurações
+# Edit .env with your settings
 nano .env
 ```
 
-### 4. Configurar Pre-commit Hooks
+### 4. Configure Pre-commit Hooks
 
 ```bash
-# Instalar hooks
+# Install hooks
 poetry run pre-commit install
 
-# Executar hooks em todos os arquivos
+# Run hooks on all files
 poetry run pre-commit run --all-files
 ```
 
-## 🏃‍♂️ Executando o Projeto
+## 🏃‍♂️ Running the Project
 
-### Desenvolvimento Local
+### Local Development
 
 ```bash
-# Executar migrações
+# Run migrations
 poetry run python manage.py migrate
 
-# Criar superusuário (opcional)
+# Create a superuser (optional)
 poetry run python manage.py createsuperuser
 
-# Iniciar servidor de desenvolvimento
+# Start the development server
 poetry run python manage.py runserver
 ```
 
-### Executando Testes
+### Running Tests
 
 ```bash
-# Todos os testes
+# Run all tests
 poetry run pytest
 
-# Testes com cobertura
+# Run tests with coverage
 poetry run pytest --cov=src --cov-report=html
 
-# Testes por categoria
-poetry run pytest -m unit        # Testes unitários
-poetry run pytest -m integration # Testes de integração
-poetry run pytest -m e2e         # Testes end-to-end
+# Run tests by category
+poetry run pytest -m unit        # Unit tests
+poetry run pytest -m integration # Integration tests
+poetry run pytest -m e2e         # End-to-end tests
 
-# Testes específicos
+# Run specific tests
 poetry run pytest tests/test_models.py
 poetry run pytest tests/test_views.py::TestViews::test_upload_view_get
 ```
 
-## 🛠️ Ferramentas de Desenvolvimento
+## 🛠️ Development Tools
 
-### Formatação e Linting
+### Formatting and Linting
 
 ```bash
-# Formatar código com Black
+# Format code with Black
 poetry run black src/
 
-# Organizar imports com isort
+# Organize imports with isort
 poetry run isort src/
 
-# Linting com Ruff
+# Linting with Ruff
 poetry run ruff check src/
 poetry run ruff format src/
 
-# Corrigir automaticamente
+# Auto-fix linting issues
 poetry run ruff check src/ --fix
 ```
 
-### Verificação de Segurança
+### Security Verification
 
 ```bash
-# Verificar vulnerabilidades
+# Check for vulnerabilities
 poetry run safety check
 
-# Verificar licenças
+# List licenses
 poetry run pip-licenses
 ```
 
-## 📦 Gerenciamento de Dependências
+## 📦 Dependency Management
 
-### Adicionar Dependências
+### Adding Dependencies
 
 ```bash
-# Dependência principal
+# Main dependency
 poetry add requests
 
-# Dependência de desenvolvimento
+# Development dependency
 poetry add --group dev pytest-cov
 
-# Dependência de produção
-poetry add --group prod psycopg2-binary
+# Production dependency
+poetry add --group prod gunicorn
 ```
 
-### Atualizar Dependências
+### Updating Dependencies
 
 ```bash
-# Atualizar todas as dependências
+# Update all dependencies
 poetry update
 
-# Atualizar dependência específica
+# Update a specific dependency
 poetry update requests
 
-# Mostrar dependências desatualizadas
+# Show outdated dependencies
 poetry show --outdated
 ```
 
-### Exportar Requirements (se necessário)
+### Exporting Requirements (if needed)
 
 ```bash
-# Para desenvolvimento
+# For development
 poetry export -f requirements.txt --with dev -o requirements-dev.txt
 
-# Para produção
+# For production
 poetry export -f requirements.txt --only main,prod -o requirements.txt
 ```
 
-## 🐳 Docker (Opcional)
+## 🐳 Docker (Optional)
 
-### Construir Imagem
+### Building the Image
 
 ```bash
-# Construir imagem
+# Build the image
 docker build -f infrastructure/docker/Dockerfile -t contai-finance .
 
-# Executar container
+# Run the container
 docker run -p 8000:8000 contai-finance
 ```
 
-### Usando Docker Compose
+### Using Docker Compose
 
 ```bash
-# Se existir docker-compose.yml
+# If docker-compose.yml exists
 docker-compose up -d
 ```
 
-## 🚀 Deploy
+## 🚀 Deployment
 
-### Produção
+### Production
 
 ```bash
-# Instalar apenas dependências de produção
+# Install only production dependencies
 poetry install --only main,prod
 
-# Coletar arquivos estáticos
+# Collect static files
 poetry run python manage.py collectstatic --noinput
 
-# Executar migrações
+# Run migrations
 poetry run python manage.py migrate
 
-# Iniciar servidor com Gunicorn
+# Start server with Gunicorn
 poetry run gunicorn contai_finance.wsgi:application --bind 0.0.0.0:8000
 ```
 
 ### AWS (Terraform)
 
 ```bash
-# Inicializar Terraform
+# Initialize Terraform
 cd infrastructure/terraform
 terraform init
 
-# Planejar mudanças
+# Plan changes
 terraform plan
 
-# Aplicar mudanças
+# Apply changes
 terraform apply
 ```
 
-## 🔧 Comandos Úteis
+## 🔧 Useful Commands
 
 ### Poetry
 
 ```bash
-# Mostrar informações do projeto
+# Show project info
 poetry show
 
-# Mostrar dependências em árvore
+# Show dependency tree
 poetry show --tree
 
-# Verificar ambiente
+# Verify environment
 poetry env info
 
-# Remover ambiente virtual
-poetry env remove python3.8
+# Remove virtual environment
+poetry env remove python3.12
 ```
 
 ### Django
 
 ```bash
-# Criar nova app
-poetry run python manage.py startapp nova_app
+# Create a new app
+poetry run python manage.py startapp new_app
 
-# Fazer migrações
+# Run migrations
 poetry run python manage.py makemigrations
 poetry run python manage.py migrate
 
-# Criar superusuário
+# Create a superuser
 poetry run python manage.py createsuperuser
 
-# Shell do Django
+# Django shell
 poetry run python manage.py shell
 ```
 
 ### Git
 
 ```bash
-# Verificar status
+# Check status
 git status
 
-# Adicionar arquivos
+# Add files
 git add .
 
-# Commit (vai executar pre-commit hooks)
-git commit -m "feat: adicionar nova funcionalidade"
+# Commit (will trigger pre-commit hooks)
+git commit -m "feat: add new functionality"
 
 # Push
 git push origin main
@@ -259,59 +259,59 @@ git push origin main
 
 ## 🐛 Troubleshooting
 
-### Problemas Comuns
+### Common Problems
 
-#### 1. Dependências não instaladas
+#### 1. Dependencies not installed
 ```bash
-# Reinstalar dependências
-poetry install --with dev
+# Reinstall dependencies
+poetry install
 
-# Limpar cache
+# Clear cache
 poetry cache clear --all pypi
 ```
 
-#### 2. Ambiente virtual não ativado
+#### 2. Virtual environment not activated
 ```bash
-# Ativar ambiente
+# Activate environment
 poetry shell
 
-# Ou prefixar comandos
+# Or prefix commands
 poetry run python manage.py runserver
 ```
 
-#### 3. Conflitos de versão
+#### 3. Version conflicts
 ```bash
-# Verificar conflitos
+# Check for conflicts
 poetry check
 
-# Resolver conflitos manualmente no pyproject.toml
+# Resolve conflicts manually in pyproject.toml
 poetry update
 ```
 
-#### 4. Pre-commit hooks falhando
+#### 4. Pre-commit hooks failing
 ```bash
-# Executar manualmente
+# Run hooks manually
 poetry run pre-commit run --all-files
 
-# Pular hooks (não recomendado)
+# Skip hooks (not recommended)
 git commit -m "feat: ..." --no-verify
 ```
 
-## 📚 Recursos Adicionais
+## 📚 Additional Resources
 
-- [Documentação Poetry](https://python-poetry.org/docs/)
-- [Documentação Django](https://docs.djangoproject.com/)
+- [Poetry Documentation](https://python-poetry.org/docs/)
+- [Django Documentation](https://docs.djangoproject.com/)
 - [Black Code Style](https://black.readthedocs.io/)
-- [Ruff Linter](https://beta.ruff.rs/docs/)
+- [Ruff Linter](https://docs.astral.sh/ruff/)
 - [Pre-commit Hooks](https://pre-commit.com/)
 
-## 🤝 Contribuição
+## 🤝 Contributing
 
-1. Fork o projeto
-2. Crie uma branch: `git checkout -b feature/nova-funcionalidade`
-3. Faça suas mudanças
-4. Execute os testes: `poetry run pytest`
-5. Formate o código: `poetry run black src/ && poetry run isort src/`
-6. Commit suas mudanças: `git commit -m 'feat: adicionar nova funcionalidade'`
-7. Push para a branch: `git push origin feature/nova-funcionalidade`
-8. Abra um Pull Request
+1. Fork the project.
+2. Create your branch: `git checkout -b feature/new-functionality`
+3. Make your changes.
+4. Run tests: `poetry run pytest`
+5. Format code: `poetry run black src/ && poetry run isort src/`
+6. Commit your changes: `git commit -m 'feat: add new functionality'`
+7. Push to the branch: `git push origin feature/new-functionality`
+8. Open a Pull Request.

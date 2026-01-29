@@ -1,115 +1,115 @@
-# Documentação de Testes - ContAI Finance
+# Test Documentation - ContAI Finance
 
-## 📋 Visão Geral
+## 📋 Overview
 
-O projeto ContAI Finance possui uma suite completa de testes automatizados usando **pytest** e **Django TestCase**, cobrindo diferentes níveis de teste:
+The ContAI Finance project features a comprehensive suite of automated tests using **pytest** and **Django TestCase**, covering various testing levels:
 
-- **Testes Unitários**: Testam componentes isolados (models, forms)
-- **Testes de Integração**: Testam interação entre componentes (views, URLs)
-- **Testes E2E**: Testam fluxos completos da aplicação
+- **Unit Tests**: Test isolated components (models, forms).
+- **Integration Tests**: Test interactions between components (views, URLs).
+- **E2E Tests**: Test complete application workflows.
 
-## 🚀 Executando os Testes
+## 🚀 Running Tests
 
-### Executar Todos os Testes
+### Run All Tests
 ```bash
-# Usando o script personalizado
+# Using the custom script
 python run_tests.py
 
-# Usando Django diretamente
-python manage.py test tests
+# Using Django directly (via Poetry)
+poetry run python manage.py test tests
 
-# Usando pytest
-pytest tests/
+# Using pytest (via Poetry)
+poetry run pytest
 ```
 
-### Executar Testes por Categoria
+### Run Tests by Category
 ```bash
-# Apenas testes unitários
-pytest -m unit
+# Unit tests only
+poetry run pytest -m unit
 
-# Apenas testes de integração
-pytest -m integration
+# Integration tests only
+poetry run pytest -m integration
 
-# Apenas testes E2E
-pytest -m e2e
+# E2E tests only
+poetry run pytest -m e2e
 ```
 
-### Executar Testes Específicos
+### Run Specific Tests
 ```bash
-# Testar apenas models
-pytest tests/test_models.py
+# Test only models
+poetry run pytest tests/test_models.py
 
-# Testar apenas views
-pytest tests/test_views.py
+# Test only views
+poetry run pytest tests/test_views.py
 
-# Teste específico
-pytest tests/test_models.py::TestUploadArquivoModel::test_criar_upload_arquivo
+# Run a specific test
+poetry run pytest tests/test_models.py::TestUploadArquivoModel::test_criar_upload_arquivo
 ```
 
-## 📊 Estrutura dos Testes
+## 📊 Test Structure
 
-```
+```text
 tests/
 ├── __init__.py
-├── test_models.py      # Testes unitários - Models
-├── test_forms.py       # Testes unitários - Forms
-├── test_views.py       # Testes integração - Views
-├── test_urls.py        # Testes integração - URLs
-└── test_e2e.py         # Testes End-to-End
+├── test_models.py      # Unit tests - Models
+├── test_forms.py       # Unit tests - Forms
+├── test_views.py       # Integration tests - Views
+├── test_urls.py        # Integration tests - URLs
+└── test_e2e.py         # End-to-End tests
 ```
 
-## 🧪 Detalhes dos Testes
+## 🧪 Test Details
 
-### Testes Unitários (7 testes)
+### Unit Tests (7 tests)
 
 #### `test_models.py`
-- ✅ `test_criar_upload_arquivo`: Criação de modelo UploadArquivo
-- ✅ `test_str_method`: Método __str__ do modelo
-- ✅ `test_meta_verbose_names`: Nomes verbose do modelo
+- ✅ `test_criar_upload_arquivo`: Creation of UploadArquivo model.
+- ✅ `test_str_method`: Model's `__str__` method.
+- ✅ `test_meta_verbose_names`: Model's verbose names.
 
 #### `test_forms.py`
-- ✅ `test_form_valido`: Validação de form com dados corretos
-- ✅ `test_form_sem_titulo`: Validação sem título
-- ✅ `test_form_sem_arquivo`: Validação sem arquivo
-- ✅ `test_form_campos_obrigatorios`: Campos obrigatórios
+- ✅ `test_form_valido`: Form validation with correct data.
+- ✅ `test_form_sem_titulo`: Validation when title is missing.
+- ✅ `test_form_sem_arquivo`: Validation when file is missing.
+- ✅ `test_form_campos_obrigatorios`: Required fields validation.
 
-### Testes de Integração (8 testes)
+### Integration Tests (8 tests)
 
 #### `test_views.py`
-- ✅ `test_upload_view_get`: GET na view de upload
-- ✅ `test_upload_view_post_valido`: POST válido no upload
-- ✅ `test_upload_view_post_invalido`: POST inválido no upload
-- ✅ `test_chat_view_get`: GET na view de chat
-- ✅ `test_chat_view_post_sem_arquivo`: POST no chat sem arquivo
-- ✅ `test_test_view_get`: View de teste GET
-- ✅ `test_test_view_post`: View de teste POST
+- ✅ `test_upload_view_get`: GET request on upload view.
+- ✅ `test_upload_view_post_valido`: Valid POST request on upload.
+- ✅ `test_upload_view_post_invalido`: Invalid POST request on upload.
+- ✅ `test_chat_view_get`: GET request on chat view.
+- ✅ `test_chat_view_post_sem_arquivo`: POST request on chat without selecting a file.
+- ✅ `test_test_view_get`: GET on test view.
+- ✅ `test_test_view_post`: POST on test view.
 
 #### `test_urls.py`
-- ✅ `test_upload_url_resolve`: Resolução da URL de upload
-- ✅ `test_chat_url_resolve`: Resolução da URL de chat
-- ✅ `test_test_url_resolve`: Resolução da URL de teste
-- ✅ `test_urls_acessiveis`: Acessibilidade das URLs
+- ✅ `test_upload_url_resolve`: Resolving the upload URL.
+- ✅ `test_chat_url_resolve`: Resolving the chat URL.
+- ✅ `test_test_url_resolve`: Resolving the test URL.
+- ✅ `test_urls_acessiveis`: URL accessibility check.
 
-### Testes E2E (4 testes)
+### E2E Tests (4 tests)
 
 #### `test_e2e.py`
-- ✅ `test_fluxo_upload_e_chat_completo`: Fluxo completo upload → chat
-- ✅ `test_fluxo_analise_csv`: Fluxo de análise de CSV
-- ✅ `test_navegacao_entre_paginas`: Navegação entre páginas
-- ✅ `test_tratamento_erro_arquivo_inexistente`: Tratamento de erros
+- ✅ `test_fluxo_upload_e_chat_completo`: Full workflow from upload to chat.
+- ✅ `test_fluxo_analise_csv`: CSV analysis workflow.
+- ✅ `test_navegacao_entre_paginas`: Navigation between pages.
+- ✅ `test_tratamento_erro_arquivo_inexistente`: Error handling for missing files.
 
-## 📈 Cobertura de Testes
+## 📈 Test Coverage
 
-| Componente | Cobertura | Testes |
+| Component | Coverage | Tests |
 |------------|-----------|--------|
-| Models | 100% | 3 testes |
-| Forms | 100% | 4 testes |
-| Views | 90% | 7 testes |
-| URLs | 100% | 4 testes |
-| Fluxos E2E | 85% | 4 testes |
-| **Total** | **~90%** | **19 testes** |
+| Models | 100% | 3 tests |
+| Forms | 100% | 4 tests |
+| Views | 90% | 7 tests |
+| URLs | 100% | 4 tests |
+| E2E Flows | 85% | 4 tests |
+| **Total** | **~90%** | **19 tests** |
 
-## 🔧 Configuração
+## 🔧 Configuration
 
 ### pytest.ini
 ```ini
@@ -124,98 +124,88 @@ markers =
     e2e: End-to-end tests
 ```
 
-### Dependências de Teste
-```bash
-pip install pytest pytest-django
-```
+## 🎯 Tested Scenarios
 
-## 🎯 Cenários Testados
+### File Upload
+- ✅ Upload with valid data.
+- ✅ Upload with invalid data.
+- ✅ Form validation.
+- ✅ Database persistence.
 
-### Upload de Arquivos
-- ✅ Upload com dados válidos
-- ✅ Upload com dados inválidos
-- ✅ Validação de formulário
-- ✅ Salvamento no banco de dados
+### Chat and Analysis
+- ✅ Chat page loading.
+- ✅ Sending questions.
+- ✅ Error handling.
+- ✅ Integration with MCP servers.
 
-### Chat e Análise
-- ✅ Carregamento da página de chat
-- ✅ Envio de perguntas
-- ✅ Tratamento de erros
-- ✅ Integração com MCP servers
+### Navigation
+- ✅ URL resolution.
+- ✅ Redirects.
+- ✅ Page accessibility.
 
-### Navegação
-- ✅ Resolução de URLs
-- ✅ Redirecionamentos
-- ✅ Acessibilidade das páginas
+## 🚨 Running with Coverage
 
-## 🚨 Executando com Coverage
-
-Para executar com relatório de cobertura:
+To run tests with a coverage report:
 
 ```bash
-# Instalar coverage
-pip install coverage
-
-# Executar com coverage
-coverage run --source='.' manage.py test tests
-coverage report
-coverage html  # Gera relatório HTML
+# Run with coverage (via Poetry)
+poetry run pytest --cov=src --cov-report=html
 ```
 
-## 📝 Adicionando Novos Testes
+## 📝 Adding New Tests
 
-### Template para Teste Unitário
+### Unit Test Template
 ```python
 import pytest
 from django.test import TestCase
 
 @pytest.mark.unit
-class TestNovoComponente(TestCase):
+class TestNewComponent(TestCase):
     def setUp(self):
-        # Setup do teste
+        # Test setup
         pass
     
-    def test_funcionalidade(self):
-        # Teste da funcionalidade
+    def test_functionality(self):
+        # Test logic
         assert True
 ```
 
-### Template para Teste de Integração
+### Integration Test Template
 ```python
 import pytest
 from django.test import TestCase, Client
 
 @pytest.mark.integration
-class TestNovaIntegracao(TestCase):
+class TestNewIntegration(TestCase):
     def setUp(self):
         self.client = Client()
     
-    def test_integracao(self):
+    def test_integration(self):
         response = self.client.get('/url/')
         assert response.status_code == 200
 ```
 
-## 🏆 Boas Práticas
+## 🏆 Best Practices
 
-1. **Isolamento**: Cada teste deve ser independente
-2. **Nomenclatura**: Use nomes descritivos para os testes
-3. **Setup/Teardown**: Use setUp() para preparar dados de teste
-4. **Assertions**: Use assertions claras e específicas
-5. **Marcadores**: Use marcadores pytest para categorizar testes
-6. **Cobertura**: Mantenha cobertura alta (>90%)
+1. **Isolation**: Each test must be independent.
+2. **Naming**: Use descriptive names for test cases.
+3. **Setup/Teardown**: Use `setUp()` to prepare test data.
+4. **Assertions**: Use clear and specific assertions.
+5. **Markers**: Use pytest markers to categorize tests.
+6. **Coverage**: Maintain high coverage (>90%).
 
-## 🔍 Debugging de Testes
+## 🔍 Debugging Tests
 
 ```bash
-# Executar com mais verbosidade
-pytest -v -s
+# Run with increased verbosity
+poetry run pytest -v -s
 
-# Parar no primeiro erro
-pytest -x
+# Stop at the first failure
+poetry run pytest -x
 
-# Executar apenas testes que falharam
-pytest --lf
+# Run only the last failed tests
+poetry run pytest --lf
 
-# Debug com pdb
-pytest --pdb
+# Debug with pdb
+poetry run pytest --pdb
 ```

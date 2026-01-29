@@ -1,102 +1,96 @@
-# Documentação Técnica - ContAI Finance
+# Technical Documentation - ContAI Finance
 
-## 📋 Visão Geral do Projeto
+## 📋 Project Overview
 
-ContAI Finance é uma aplicação web Django desenvolvida para contadores fazerem upload de arquivos CSV e interagirem com um assistente de IA para análise de dados financeiros.
+ContAI Finance is a Django web application developed for accountants to upload CSV files and interact with an AI assistant for financial data analysis.
 
-## 🏗️ Arquitetura do Sistema
+## 🏗️ System Architecture
 
-### Componentes Principais
+### Main Components
 
-1. **Frontend**: Interface web responsiva com Bootstrap 5
-2. **Backend**: Django 5.2.6 com Python 3.8+
-3. **Banco de Dados**: SQLite para desenvolvimento
-4. **MCP Servers**: Servidores de análise CSV e integração Bedrock
-5. **Infraestrutura**: Docker + Terraform para deploy AWS
+1. **Frontend**: Responsive web interface using Bootstrap 5.
+2. **Backend**: Django 5.2.6 with Python 3.12+.
+3. **Database**: SQLite for development.
+4. **MCP Servers**: Specialized CSV analysis and Bedrock integration servers.
+5. **Infrastructure**: Docker + Terraform for AWS deployment.
 
-### Fluxo de Dados
+### Data Flow
 
-```
-Usuário → Frontend → Django Views → MCP Servers → AWS Bedrock
+```text
+User → Frontend → Django Views → MCP Servers → AWS Bedrock
                          ↓
                    SQLite Database
                          ↓
                    Media Storage
 ```
 
-## 🔧 Tecnologias Utilizadas
+## 🔧 Technologies Used
 
-| Categoria | Tecnologia | Versão | Propósito |
+| Category | Technology | Version | Purpose |
 |-----------|------------|--------|-----------|
-| **Backend** | Django | 5.2.6 | Framework web |
-| **Frontend** | Bootstrap | 5.x | UI responsiva |
-| **Database** | SQLite | 3.x | Banco de dados |
-| **Cloud** | AWS Bedrock | - | IA para análise |
-| **Cloud** | AWS S3 | - | Armazenamento |
-| **Testing** | pytest | 7.4.3 | Testes automatizados |
-| **Package Management** | Poetry | - | Gerenciamento de dependências |
-| **Linting** | Ruff | - | Linting e formatação rápida |
-| **Formatting** | Black | 23.7.0 | Formatação de código |
-| **Import Sorting** | isort | 5.12.0 | Organização de imports |
-| **IaC** | Terraform | 1.x | Infraestrutura |
-| **Container** | Docker | - | Containerização |
+| **Backend** | Django | 5.2.6 | Web Framework |
+| **Frontend** | Bootstrap | 5.x | Responsive UI |
+| **Database** | SQLite | 3.x | Database |
+| **Cloud** | AWS Bedrock | - | AI for Analysis |
+| **Cloud** | AWS S3 | - | Storage |
+| **Testing** | pytest | 7.4.3 | Automated Testing |
+| **Package Management** | Poetry | - | Dependency Management |
+| **Linting** | Ruff | - | Fast Linting and Formatting |
+| **Formatting** | Black | 23.7.0 | Code Formatting |
+| **Import Sorting** | isort | 5.12.0 | Import Organization |
+| **IaC** | Terraform | 1.x | Infrastructure as Code |
+| **Container** | Docker | - | Containerization |
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
-```
+```text
 ContAI-Finance/
-├── src/                          # 📁 Código fonte
-│   ├── contai_finance/          # 🏗️ Configurações Django
-│   │   ├── settings.py         # Configurações principais
-│   │   ├── urls.py            # URLs principais
-│   │   └── wsgi.py            # WSGI config
-│   ├── financeiro/             # 📦 App principal
-│   │   ├── models.py          # Modelos de dados
-│   │   ├── views.py           # Lógica de negócio
-│   │   ├── forms.py           # Formulários
-│   │   └── urls.py            # URLs do app
-│   ├── mcp_server/            # 🔧 Utilitários/Serviços
-│   │   ├── csv_analyzer.py    # Análise de CSV
-│   │   └── bedrock_integration.py # Integração Bedrock
-│   ├── templates/              # 📄 Templates HTML
-│   │   ├── base.html          # Template base
-│   │   ├── upload.html        # Página de upload
-│   │   └── chat.html          # Página de chat
-│   ├── static/                 # 🎨 Assets estáticos
-│   └── manage.py               # 🎯 Ponto de entrada
-├── tests/                        # 🧪 Testes organizados
-│   ├── conftest.py             # Configuração compartilhada
-│   ├── test_models.py          # Testes de modelos
-│   ├── test_forms.py           # Testes de formulários
-│   ├── test_views.py           # Testes de views
-│   └── test_urls.py            # Testes de URLs
-├── infrastructure/               # ☁️ Infraestrutura como código
-│   ├── terraform/              # 🏗️ IaC AWS
-│   │   ├── main.tf            # Configurações Terraform
-│   │   ├── variables.tf       # Variáveis
+├── src/                          # 📁 Source Code
+│   ├── contai_finance/          # 🏗️ Django Configuration
+│   │   ├── settings.py         # Main Settings
+│   │   ├── urls.py            # Main URLs
+│   │   └── wsgi.py            # WSGI Config
+│   ├── financeiro/             # 📦 Main Application Module
+│   │   ├── models.py          # Data Models
+│   │   ├── views.py           # Business Logic
+│   │   ├── forms.py           # Forms
+│   │   └── urls.py            # Application URLs
+│   ├── mcp_server/            # 🔧 Utilities/Services
+│   │   ├── csv_analyzer.py    # CSV Analysis
+│   │   └── bedrock_integration.py # Bedrock Integration
+│   ├── templates/              # 📄 HTML Templates
+│   │   ├── base.html          # Base Template
+│   │   ├── upload.html        # Upload Page
+│   │   └── chat.html          # Chat Page
+│   ├── static/                 # 🎨 Static Assets
+│   └── manage.py               # 🎯 Entry Point
+├── tests/                        # 🧪 Organized Tests
+│   ├── conftest.py             # Shared Configuration
+│   ├── test_models.py          # Model Tests
+│   ├── test_forms.py           # Form Tests
+│   ├── test_views.py           # View Tests
+│   └── test_urls.py            # URL Tests
+├── infrastructure/               # ☁️ Infrastructure as Code
+│   ├── terraform/              # 🏗️ AWS IaC
+│   │   ├── main.tf            # Terraform Config
+│   │   ├── variables.tf       # Variables
 │   │   └── outputs.tf         # Outputs
-│   ├── docker/                 # 🐳 Containerização
-│   │   └── Dockerfile         # Imagem Docker
-│   └── scripts/                # 📜 Scripts de deploy
-│       ├── deploy.sh          # Script de deploy
-│       └── lambda_function.py # Função Lambda
-├── requirements/                 # 📦 Dependências por ambiente
-│   ├── base.txt                # 📋 Dependências base
-│   ├── dev.txt                 # 🛠️ Desenvolvimento
-│   ├── test.txt                # 🧪 Testes
-│   └── prod.txt                # 🚀 Produção
-├── docs/                         # 📚 Documentação completa
-├── .env.example                  # 🔐 Exemplo de variáveis
-├── manage.py                     # 🎯 Wrapper para src/manage.py
-├── pytest.ini                    # ⚙️ Configuração de testes
-├── .pre-commit-config.yaml       # 🔧 Pre-commit hooks
-├── .flake8                       # 🎯 Configuração linter
-└── README.md                     # 📖 Documentação principal
+│   ├── docker/                 # 🐳 Containerization
+│   │   └── Dockerfile         # Docker Image
+│   └── scripts/                # 📜 Deployment Scripts
+│       ├── deploy.sh          # Deployment Script
+│       └── lambda_function.py # Lambda Function
+├── docs/                         # 📚 Comprehensive Documentation
+├── .env.example                  # 🔐 Environment Variables Example
+├── manage.py                     # 🎯 Wrapper for src/manage.py
+├── pytest.ini                    # ⚙️ Test Configuration
+├── .pre-commit-config.yaml       # 🔧 Pre-commit Hooks
+└── README.md                     # 📖 Main Documentation
 ```
 
-## 🗄️ Modelos de Dados
+## 🗄️ Data Models
 
-### UploadArquivo
+### UploadArquivo (Uploaded File)
 ```python
 class UploadArquivo(models.Model):
     titulo = models.CharField(max_length=255)
@@ -104,122 +98,119 @@ class UploadArquivo(models.Model):
     data_upload = models.DateTimeField(auto_now_add=True)
 ```
 
-**Campos:**
-- `titulo`: Nome descritivo do arquivo
-- `arquivo`: Arquivo CSV enviado
-- `data_upload`: Timestamp do upload
+**Fields:**
+- `titulo`: Descriptive name of the file.
+- `arquivo`: The uploaded CSV file.
+- `data_upload`: Timestamp of the upload.
 
-## 🌐 APIs e Endpoints
+## 🌐 APIs and Endpoints
 
-### URLs Principais
+### Main URLs
 
-| URL | Método | View | Descrição |
+| URL | Method | View | Description |
 |-----|--------|------|-----------|
-| `/` | GET/POST | `upload_view` | Upload de arquivos |
-| `/chat/` | GET/POST | `chat_view` | Interface de chat |
-| `/test/` | GET/POST | `test_view` | Endpoint de teste |
+| `/` | GET/POST | `upload_view` | File Upload |
+| `/chat/` | GET/POST | `chat_view` | Chat Interface |
+| `/test/` | GET/POST | `test_view` | Test Endpoint |
 
-### Formato de Resposta do Chat
+### Chat Response Format
 
 ```json
 {
-  "resposta": "Análise do arquivo financeiro.csv:\n📊 Total: R$ 1.500,00"
+  "resposta": "Analysis of financial.csv:\n📊 Total: R$ 1,500.00"
 }
 ```
 
 ## 🔍 MCP Servers
 
 ### CSV Analyzer
-- **Arquivo**: `mcp_server/csv_analyzer.py`
-- **Função**: Análise local de arquivos CSV
-- **Métodos**:
-  - `analyze_csv()`: Análise completa
-  - `query_data()`: Consultas específicas
-  - `list_csv_files()`: Lista arquivos disponíveis
+- **File**: `mcp_server/csv_analyzer.py`
+- **Function**: Local analysis of CSV files.
+- **Methods**:
+  - `analyze_csv()`: Comprehensive analysis.
+  - `query_data()`: Specific queries.
+  - `list_csv_files()`: Lists available files.
 
 ### Bedrock Integration
-- **Arquivo**: `mcp_server/bedrock_integration.py`
-- **Função**: Integração com AWS Bedrock para IA
-- **Métodos**:
-  - `generate_financial_insights()`: Insights automáticos
-  - `analyze_with_bedrock()`: Análise avançada
+- **File**: `mcp_server/bedrock_integration.py`
+- **Function**: Integration with AWS Bedrock for AI insights.
+- **Methods**:
+  - `generate_financial_insights()`: Automatic insights.
+  - `analyze_financial_data()`: Advanced analysis.
 
-## 🧪 Testes Automatizados
+## 🧪 Automated Testing
 
-### Estrutura de Testes
-- **19 testes** implementados
-- **Cobertura**: ~90% do código
-- **Tipos**: Unitários, Integração, E2E
+### Test Structure
+- **19 tests** implemented.
+- **Coverage**: ~90% of code.
+- **Types**: Unit, Integration, E2E.
 
-### Executar Testes
+### Running Tests
 ```bash
-# Todos os testes
+# Run all tests
 python run_tests.py
 
-# Por categoria
-pytest -m unit      # Unitários
-pytest -m integration  # Integração
-pytest -m e2e       # End-to-End
+# Run by category
+pytest -m unit          # Unit tests
+pytest -m integration   # Integration tests
+pytest -m e2e           # End-to-End tests
 ```
 
-## 🚀 Deploy e Infraestrutura
+## 🚀 Deployment and Infrastructure
 
-### Desenvolvimento Local
+### Local Development
 ```bash
-# 1. Clonar repositório
-git clone https://github.com/seu-usuario/ContAI-Finance.git
+# 1. Clone repository
+git clone https://github.com/oVitorio-ac/ContAI-Finance.git
 cd ContAI-Finance
 
-# 2. Instalar Poetry (se não tiver)
-curl -sSL https://install.python-poetry.org | python3 -
+# 2. Setup environment using Poetry
+poetry install
 
-# 3. Instalar dependências de desenvolvimento
-poetry install --with dev
-
-# 4. Configurar variáveis de ambiente (opcional)
+# 3. Configure environment variables (optional)
 cp .env.example .env
-# Editar .env com suas configurações
+# Edit .env with your settings
 
-# 5. Executar migrações
+# 4. Run migrations
 poetry run python manage.py migrate
 
-# 6. Iniciar servidor
+# 5. Start server
 poetry run python manage.py runserver
 ```
 
-### Configuração de Desenvolvimento
+### Development Configuration
 ```bash
-# Instalar pre-commit hooks
+# Install pre-commit hooks
 poetry run pre-commit install
 
-# Executar linting e formatação
+# Run linting and formatting
 poetry run ruff check src/
 poetry run ruff format src/
 poetry run black src/
 poetry run isort src/
 
-# Executar testes com cobertura
+# Run tests with coverage
 poetry run pytest --cov=src --cov-report=html
 ```
 
-### Deploy AWS (Planejado)
-- **ECS Fargate**: Containers da aplicação
-- **S3**: Armazenamento de arquivos
-- **Lambda**: Processamento serverless
-- **ALB**: Load balancer
-- **Terraform**: Infraestrutura como código
+### AWS Deployment (Planned)
+- **ECS Fargate**: Application containers.
+- **S3**: File storage.
+- **Lambda**: Serverless processing.
+- **ALB**: Application Load Balancer.
+- **Terraform**: Infrastructure as Code.
 
-## 🔒 Segurança
+## 🔒 Security
 
-### Configurações de Segurança
-- CSRF protection habilitado
-- File upload validation
-- SQL injection protection (Django ORM)
-- XSS protection (Django templates)
+### Security Features
+- CSRF protection enabled.
+- File upload validation.
+- SQL injection protection (Django ORM).
+- XSS protection (Django templates).
 
-### Variáveis de Ambiente
+### Environment Variables
 ```bash
-# AWS (para produção)
+# AWS (Production)
 AWS_ACCESS_KEY_ID=<key>
 AWS_SECRET_ACCESS_KEY=<secret>
 AWS_S3_BUCKET_NAME=<bucket>
@@ -231,11 +222,11 @@ SECRET_KEY=<secret>
 ALLOWED_HOSTS=<hosts>
 ```
 
-## 📊 Monitoramento e Logs
+## 📊 Monitoring and Logs
 
 ### Logging
 ```python
-# Configuração em settings.py
+# Configuration in settings.py
 LOGGING = {
     'version': 1,
     'handlers': {
@@ -254,9 +245,9 @@ LOGGING = {
 }
 ```
 
-## 🔧 Configurações de Desenvolvimento
+## 🔧 Development Settings
 
-### Settings.py Principais
+### Main settings.py
 ```python
 # Database
 DATABASES = {
@@ -277,41 +268,41 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 ## 🐛 Troubleshooting
 
-### Problemas Comuns
+### Common Issues
 
-1. **Erro de ALLOWED_HOSTS**
+1. **ALLOWED_HOSTS Error**
    ```python
    # settings.py
-   ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'seu-dominio.com']
+   ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'your-domain.com']
    ```
 
-2. **Erro de migrações**
+2. **Migration Errors**
    ```bash
    python manage.py makemigrations
    python manage.py migrate
    ```
 
-3. **Erro de arquivos estáticos**
+3. **Static Files Error**
    ```bash
    python manage.py collectstatic
    ```
 
 ## 📈 Performance
 
-### Otimizações Implementadas
-- Lazy loading de MCP servers
-- Caching de análises CSV
-- Compressão de responses
-- Otimização de queries Django
+### Implemented Optimizations
+- Lazy loading for MCP servers.
+- CSV analysis caching.
+- Response compression.
+- Django query optimization.
 
-### Métricas de Performance
-- Tempo de upload: < 2s
-- Análise CSV: < 5s
-- Resposta do chat: < 3s
+### Performance Metrics
+- Upload time: < 2s
+- CSV analysis: < 5s
+- Chat response: < 3s
 
-## 🔄 CI/CD (Planejado)
+## 🔄 CI/CD (Planned)
 
-### Pipeline GitHub Actions
+### GitHub Actions Pipeline
 ```yaml
 # .github/workflows/ci.yml
 name: CI/CD
@@ -331,18 +322,18 @@ jobs:
         run: terraform apply
 ```
 
-## 📚 Recursos Adicionais
+## 📚 Additional Resources
 
-- [Documentação Django](https://docs.djangoproject.com/)
+- [Django Documentation](https://docs.djangoproject.com/)
 - [AWS Bedrock Docs](https://docs.aws.amazon.com/bedrock/)
 - [Bootstrap Docs](https://getbootstrap.com/docs/)
 - [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/)
 
-## 🤝 Contribuição
+## 🤝 Contributing
 
-1. Fork o projeto
-2. Crie uma branch para sua feature
-3. Implemente os testes
-4. Execute a suite de testes
-5. Faça commit das mudanças
-6. Abra um Pull Request
+1. Fork the project.
+2. Create your feature branch.
+3. Implement tests.
+4. Run the test suite.
+5. Commit your changes.
+6. Open a Pull Request.

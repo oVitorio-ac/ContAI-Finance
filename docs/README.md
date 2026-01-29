@@ -1,58 +1,58 @@
-# 📚 Documentação ContAI Finance
+# 📚 ContAI Finance Documentation
 
-Bem-vindo à documentação completa do projeto ContAI Finance! Esta pasta centraliza toda a documentação técnica do projeto.
+Welcome to the comprehensive documentation for the ContAI Finance project! This directory serves as the central hub for all technical documentation.
 
-## 📋 Índice da Documentação
+## 📋 Documentation Index
 
-### 🏗️ Arquitetura
-- **[architecture-diagram.drawio](architecture/architecture-diagram.drawio)** - Diagrama de arquitetura em formato DrawIO
-- **[architecture-mermaid.md](architecture/architecture-mermaid.md)** - Diagramas de arquitetura em Mermaid
-- **[technical-documentation.md](architecture/technical-documentation.md)** - Documentação técnica completa
+### 🏗️ Architecture
+- **[architecture-diagram.drawio](architecture/architecture-diagram.drawio)** - Architecture diagram in DrawIO format
+- **[architecture-mermaid.md](architecture/architecture-mermaid.md)** - Architecture diagrams in Mermaid format
+- **[technical-documentation.md](architecture/technical-documentation.md)** - Full technical documentation
 
-### 🧪 Testes
-- **[testing.md](development/testing.md)** - Documentação completa dos testes automatizados
+### 🧪 Testing
+- **[testing.md](development/testing.md)** - Documentation for automated testing
 
-### 💰 Custos AWS
-- **[aws-cost-analysis.md](cost/aws-cost-analysis.md)** - Análise detalhada de custos por serviço
-- **[cost-summary.md](cost/cost-summary.md)** - Resumo executivo e ROI
+### 💰 AWS Costs
+- **[aws-cost-analysis.md](cost/aws-cost-analysis.md)** - Detailed cost analysis per service
+- **[cost-summary.md](cost/cost-summary.md)** - Executive summary and ROI
 
 ### 🔌 APIs
-- **[api-documentation.md](api/api-documentation.md)** - Documentação completa da API REST
+- **[api-documentation.md](api/api-documentation.md)** - REST API documentation
 
-### 📝 Histórico
-- **[CHANGELOG.md](CHANGELOG.md)** - Histórico completo de mudanças e versões
-- **[prompts-amazon-q-developer.md](development/prompts-amazon-q-developer.md)** - Prompts utilizados com Amazon Q Developer
+### 📝 History
+- **[CHANGELOG.md](CHANGELOG.md)** - Full version history and changes
+- **[prompts-amazon-q-developer.md](development/prompts-amazon-q-developer.md)** - Prompts used with Amazon Q Developer
 
-## 🚀 Links Rápidos
+## 🚀 Quick Links
 
-### Para Desenvolvedores
-- [Guia de Desenvolvimento](development/development.md) - Configuração completa com Poetry
-- [Estrutura do Projeto](architecture/technical-documentation.md#-estrutura-do-projeto)
-- [Modelos de Dados](architecture/technical-documentation.md#-modelos-de-dados)
-- [APIs e Endpoints](architecture/technical-documentation.md#-apis-e-endpoints)
-- [Configurações](architecture/technical-documentation.md#-configurações-de-desenvolvimento)
+### For Developers
+- [Development Guide](development/development.md) - Full setup with Poetry
+- [Project Structure](architecture/technical-documentation.md#-project-structure)
+- [Data Models](architecture/technical-documentation.md#-data-models)
+- [APIs and Endpoints](architecture/technical-documentation.md#-apis-and-endpoints)
+- [Configuration](architecture/technical-documentation.md#-development-configuration)
 
-### Para DevOps
-- [Deploy e Infraestrutura](architecture/technical-documentation.md#-deploy-e-infraestrutura)
-- [Segurança](architecture/technical-documentation.md#-segurança)
-- [Monitoramento](architecture/technical-documentation.md#-monitoramento-e-logs)
-- [Custos AWS](cost/aws-cost-analysis.md) - Análise completa
-- [ROI e Resumo](cost/cost-summary.md) - Visão executiva
+### For DevOps
+- [Deployment & Infrastructure](architecture/technical-documentation.md#-deployment-and-infrastructure)
+- [Security](architecture/technical-documentation.md#-security)
+- [Monitoring](architecture/technical-documentation.md#-monitoring-and-logs)
+- [AWS Costs](cost/aws-cost-analysis.md) - Full analysis
+- [ROI Summary](cost/cost-summary.md) - Executive view
 
-### Para QA
-- [Executar Testes](development/testing.md#-executando-os-testes)
-- [Estrutura dos Testes](development/testing.md#-estrutura-dos-testes)
-- [Cobertura](development/testing.md#-cobertura-de-testes)
+### For QA
+- [Running Tests](development/testing.md#-running-tests)
+- [Test Structure](development/testing.md#-test-structure)
+- [Coverage](development/testing.md#-test-coverage)
 
-### Para Todos
-- [Histórico de Mudanças](CHANGELOG.md) - Versões e mudanças
-- [Prompts Amazon Q Developer](development/prompts-amazon-q-developer.md) - Interações com IA
+### General Information
+- [Change Log](CHANGELOG.md) - Versions and updates
+- [Amazon Q Developer Prompts](development/prompts-amazon-q-developer.md) - AI interactions
 
-## 🎯 Visão Geral do Projeto
+## 🎯 Project Overview
 
-ContAI Finance é uma aplicação Django para contadores fazerem upload de arquivos CSV e interagirem com um assistente de IA para análise de dados financeiros.
+ContAI Finance is a Django application designed for accountants to upload CSV files and interact with an AI-powered assistant for financial data analysis.
 
-### Tecnologias Principais
+### Core Technologies
 - **Backend**: Django 5.2.6
 - **Frontend**: Bootstrap 5
 - **Database**: SQLite
@@ -60,38 +60,34 @@ ContAI Finance é uma aplicação Django para contadores fazerem upload de arqui
 - **AI**: AWS Bedrock
 - **Infrastructure**: Terraform + Docker
 
-### Status do Projeto
-- ✅ **Etapa 1**: Projeto base implementado
-- ✅ **Etapa 2**: Arquitetura documentada + Testes automatizados
-- 🔄 **Etapa 3**: Deploy AWS (em planejamento)
+## 📊 Project Metrics
 
-## 📊 Métricas do Projeto
-
-| Métrica | Valor |
+| Metric | Value |
 |---------|-------|
-| Testes Automatizados | 19 testes |
-| Cobertura de Código | ~90% |
-| Componentes Documentados | 100% |
-| Diagramas de Arquitetura | 2 formatos |
+| Automated Tests | 19 tests |
+| Code Coverage | ~90% |
+| Documented Components | 100% |
+| Architecture Diagrams | 2 formats |
 
-## 🔗 Links Externos
+## 🔗 External Links
 
-- [Repositório GitHub](https://github.com/seu-usuario/ContAI-Finance)
+- [GitHub Repository](https://github.com/oVitorio-ac/ContAI-Finance)
 - [Django Documentation](https://docs.djangoproject.com/)
 - [AWS Bedrock Docs](https://docs.aws.amazon.com/bedrock/)
 - [pytest Documentation](https://docs.pytest.org/)
 
-## 🤝 Contribuindo
+## 🤝 Contributing
 
-Para contribuir com a documentação:
+To contribute to the documentation or the project:
 
-1. Mantenha a estrutura existente
-2. Use markdown para formatação
-3. Inclua exemplos práticos
-4. Atualize este índice quando adicionar novos documentos
-5. Teste os exemplos de código antes de commitar
+1. Read our [Contributing Guidelines](https://github.com/oVitorio-ac/.github/blob/main/CONTRIBUTING.md).
+2. Maintain the existing structure.
+2. Use markdown for formatting.
+3. Include practical examples.
+4. Update this index when adding new documents.
+5. Verify code snippets before committing.
 
 ---
 
-**Versão da documentação**: 2.0  
-**Projeto**: ContAI Finance - TDC 2025 Q Developer Quest
+**Documentation Version**: 2.0  
+**Project**: ContAI Finance - TDC 2025 Q Developer Quest

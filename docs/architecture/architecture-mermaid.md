@@ -1,11 +1,11 @@
-# Diagrama de Arquitetura - ContAI Finance
+# Architecture Diagram - ContAI Finance
 
-## Arquitetura Geral
+## General Architecture
 
 ```mermaid
 graph TB
     subgraph "Frontend Layer"
-        U[👤 Contador] --> F[🌐 Frontend<br/>Bootstrap + HTML]
+        U[👤 Accountant] --> F[🌐 Frontend<br/>Bootstrap + HTML]
     end
     
     subgraph "Application Layer"
@@ -41,11 +41,11 @@ graph TB
     class AWS2,DOCKER,TERRA future
 ```
 
-## Fluxo de Dados
+## Data Flow
 
 ```mermaid
 sequenceDiagram
-    participant C as 👤 Contador
+    participant C as 👤 Accountant
     participant F as 🌐 Frontend
     participant D as 🐍 Django
     participant DB as 🗄️ Database
@@ -74,39 +74,39 @@ sequenceDiagram
     F->>C: 14. Display answer
 ```
 
-## Componentes Principais
+## Main Components
 
 ### 1. Frontend
-- **Bootstrap 5** para UI responsiva
-- **HTML5** templates com Django
-- **JavaScript** para interações AJAX
+- **Bootstrap 5** for responsive UI.
+- **HTML5** templates with Django.
+- **JavaScript** for AJAX interactions.
 
 ### 2. Backend
-- **Django 5.2.6** framework web
-- **SQLite** banco de dados local
-- **Boto3** para integração AWS (futuro)
+- **Django 5.2.6** web framework.
+- **SQLite** local database.
+- **Boto3** for AWS integration (future).
 
 ### 3. MCP Servers
-- **CSV Analyzer**: Análise local de arquivos CSV
-- **Bedrock Integration**: IA para insights avançados
+- **CSV Analyzer**: Local analysis of CSV files.
+- **Bedrock Integration**: AI for advanced insights.
 
-### 4. Infraestrutura (Planejada)
-- **Docker** para containerização
-- **Terraform** para IaC na AWS
-- **ECS Fargate** para deploy
-- **S3** para armazenamento de arquivos
-- **Lambda** para processamento serverless
+### 4. Infrastructure (Planned)
+- **Docker** for containerization.
+- **Terraform** for IaC on AWS.
+- **ECS Fargate** for deployment.
+- **S3** for file storage.
+- **Lambda** for serverless processing.
 
-## Tecnologias Utilizadas
+## Technologies Used
 
-| Componente | Tecnologia | Status |
+| Component | Technology | Status |
 |------------|------------|--------|
-| Frontend | Bootstrap 5, HTML5, JS | ✅ Implementado |
-| Backend | Django 5.2.6, Python 3.8+ | ✅ Implementado |
-| Database | SQLite | ✅ Implementado |
-| Storage | Local Media | ✅ Implementado |
-| MCP | CSV Analyzer | ✅ Implementado |
-| AI | AWS Bedrock | ✅ Implementado |
-| Container | Docker | 🔄 Planejado |
-| Cloud | AWS S3, ECS, Lambda | 🔄 Planejado |
-| IaC | Terraform | 🔄 Planejado |
+| Frontend | Bootstrap 5, HTML5, JS | ✅ Implemented |
+| Backend | Django 5.2.6, Python 3.12+ | ✅ Implemented |
+| Database | SQLite | ✅ Implemented |
+| Storage | Local Media | ✅ Implemented |
+| MCP | CSV Analyzer | ✅ Implemented |
+| AI | AWS Bedrock | ✅ Implemented |
+| Container | Docker | 🔄 Planned |
+| Cloud | AWS S3, ECS, Lambda | 🔄 Planned |
+| IaC | Terraform | 🔄 Planned |
